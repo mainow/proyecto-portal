@@ -10,7 +10,9 @@ class SubmitHandler {
     public function getSubmittedData():array {
         $keysOut = [];
         foreach ($this->keywords as $keyword) {
-            $keysOut[$keyword] = $this->method[$keyword];
+            if (isset($this->method[$keyword])) {
+                $keysOut[$keyword] = $this->method[$keyword];
+            }
         }
         return $keysOut;
     }
@@ -46,6 +48,7 @@ class SubmitHandler {
     }
 
     public function sendUserTo(string $filename, string $keywords=""):void {
-        header("Location: " .$filename. "?" .$keywords);
+
+        header("Location: " .$filename. ($keywords ? "?" . $keywords : "") );
     }
 }

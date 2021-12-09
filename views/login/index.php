@@ -1,6 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
-?>
+}?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +73,7 @@
                 require "config.php";
                 if ($loginStatus == "user-found") {
                     // en public_html "/" es suficiente para index
-                    header("Location: /login-system/index");
+                    header("Location: profile");
                 }
                 ?>
                 <p class="text-danger text-center"><?php echo $LOGIN_STATUS_MSGS[$_GET["login-status"]] ?></p>
