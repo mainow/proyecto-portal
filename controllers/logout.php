@@ -1,6 +1,6 @@
 <?php
 
-class LogOut extends Controller {
+class Logout extends Controller {
     function __construct() {
         $this->logOutUser();
         App::redirectUser("home");

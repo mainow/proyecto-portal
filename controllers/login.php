@@ -1,6 +1,6 @@
 <?php
 
-class LogIn extends Controller {
+class Login extends Controller {
     function __construct() {
         require "config.php";
         parent::__construct("login");
@@ -11,8 +11,8 @@ class LogIn extends Controller {
             $this->renderView();
             return ;
         }
-        $this->submitHandler = new SubmitHandler($_POST, ["username", "pwd"]);
-        $this->loginInfo = $this->submitHandler->submittedData;
+        $this->formHandler = new FormHandler($_POST, ["username", "pwd"]);
+        $this->loginInfo = $this->formHandler->submittedData;
         $this->users = new Users();
         $loginStatus = $this->getLoginStatus();
         if ($loginStatus == $LOGIN_STATUS["user-found"]) {
@@ -26,7 +26,7 @@ class LogIn extends Controller {
             session_start();
         }
         if (isset($_SESSION["username"])) {
-            $this->submitHandler->sendUserTo("dashboard");
+            $this->formHandler->sendUserTo("dashboard");
         }
     }
 
@@ -41,7 +41,7 @@ class LogIn extends Controller {
     
     function getLoginStatus() {
         require "config.php";
-        if ($this->submitHandler->emptyField($this->submitHandler->submittedData)) {
+        if ($this->formHandler->emptyField($this->formHandler->submittedData)) {
             return $LOGIN_STATUS["empty-fields"];
         }
         if (!$this->users->accountExists($this->loginInfo["username"], $this->loginInfo["pwd"])) {

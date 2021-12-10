@@ -1,6 +1,10 @@
 <?php
 
 class DataBaseInfo {
+    /**
+     * DataBaseInfo
+     * * Provee una manera simple de inicializar los datos de una base de datos
+     */
     function __construct(string $dbHost, string $dbUser, string $dbPwd, string $dbDatabase) {
         $this->host = $dbHost;
         $this->user = $dbUser;
@@ -10,7 +14,10 @@ class DataBaseInfo {
 }
 
 class DataBase {
-
+    /**
+     * Database
+     * * Permite conectar y hacer queries a una base de datos
+     */
     function __construct(DataBaseInfo $databaseInfo) {
         $this->host = $databaseInfo->host;
         $this->user = $databaseInfo->user;

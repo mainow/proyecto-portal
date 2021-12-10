@@ -14,7 +14,7 @@ require "config.php";
     if (isset($_SESSION["username"])) {
         ?>
         <a href="logout">Cerrar Session</a>
-        <a href="<?php echo $ROUTES["dashboard"] ?>">Ir al Dashboard</a>
+        <a href="dashboard">Ir al Dashboard</a>
         <?php
     } else {
         ?>

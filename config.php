@@ -1,5 +1,5 @@
 <?php
-require_once "libs/templates/db.php";
+require_once "core/Database.php";
 
 $USERS_DB = new DataBaseInfo("localhost", "root", "", "test");
 
@@ -12,12 +12,4 @@ $LOGIN_STATUS = [
     "empty-fields" => "empty-fields",
     "user-not-found" => "user-not-found",
     "user-found" => "user-found"
-];
-
-$ROUTES = [
-    "index" => "index",
-    "login" => "login",
-    "badrequest" => "badrequest",
-    "dashboard" => "dashboard",
-    "logout" => "logout"
 ];

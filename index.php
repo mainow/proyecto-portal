@@ -1,10 +1,11 @@
 <?php
 
-require_once "libs/app/app.php";
-require_once "libs/templates/controller.php";
-require_once "libs/templates/model.php";
-require_once "config.php";
-require_once "libs/templates/submit-handler.php";
-require_once "models/users.php";
+require_once "Autoloader.php";
 
-$app = new App("main");
+$router = new Router;
+$router->set("/home", Home::class);
+$router->set("/login", Login::class);
+$router->set("/logout", Logout::class);
+$router->set("/dashboard", Dashboard::class);
+$router->set("_404", BadRequest::class);
+$app = new App($router);

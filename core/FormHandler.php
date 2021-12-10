@@ -1,5 +1,10 @@
 <?php 
-class SubmitHandler {
+
+class FormHandler {
+    /**
+     * FormHandler
+     * * Validacion de formularios
+     */
     public function __construct(array $method, array $keywords)
     {
         $this->method = $method;
