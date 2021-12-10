@@ -1,8 +1,8 @@
 <?php
 
-class Index extends Controller {
+class Home extends Controller {
     function __construct() {
-        parent::__construct("index");
+        parent::__construct("home");
         $this->renderView();
     }
 }

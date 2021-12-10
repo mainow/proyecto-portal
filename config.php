@@ -13,3 +13,11 @@ $LOGIN_STATUS = [
     "user-not-found" => "user-not-found",
     "user-found" => "user-found"
 ];
+
+$ROUTES = [
+    "index" => "index",
+    "login" => "login",
+    "badrequest" => "badrequest",
+    "dashboard" => "dashboard",
+    "logout" => "logout"
+];

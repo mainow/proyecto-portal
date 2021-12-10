@@ -46,9 +46,4 @@ class SubmitHandler {
     public function passwordsMatch(string $pwd, string $pwdRepeat):bool {
         return $pwd == $pwdRepeat;
     }
-
-    public function sendUserTo(string $filename, string $keywords=""):void {
-
-        header("Location: " .$filename. ($keywords ? "?" . $keywords : "") );
-    }
 }

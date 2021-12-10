@@ -4,20 +4,21 @@ class LogIn extends Controller {
     function __construct() {
         require "config.php";
         parent::__construct("login");
-        $this->submitHandler = new SubmitHandler($_POST, ["username", "pwd"]);
-        $this->handleUserInvalidVisit();
-
+        if (App::isUserLoggedIn()) {
+            App::redirectUser("dashboard");
+        }
         if (!$this->userSubmittedLoginForm()) {
             $this->renderView();
             return ;
         }
+        $this->submitHandler = new SubmitHandler($_POST, ["username", "pwd"]);
         $this->loginInfo = $this->submitHandler->submittedData;
         $this->users = new Users();
         $loginStatus = $this->getLoginStatus();
         if ($loginStatus == $LOGIN_STATUS["user-found"]) {
             $this->setLogIn($this->loginInfo["username"]);
         }
-        $this->submitHandler->sendUserTo("login", "login-status={$loginStatus}");
+        App::redirectUser("login?login-status={$loginStatus}");
     }
     
     function handleUserInvalidVisit() {
@@ -25,10 +26,8 @@ class LogIn extends Controller {
             session_start();
         }
         if (isset($_SESSION["username"])) {
-            $this->submitHandler->sendUserTo("profile");
-            exit;
+            $this->submitHandler->sendUserTo("dashboard");
         }
-
     }
 
     function userSubmittedLoginForm():bool {

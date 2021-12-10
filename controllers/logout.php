@@ -2,9 +2,8 @@
 
 class LogOut extends Controller {
     function __construct() {
-        parent::__construct("index");
         $this->logOutUser();
-        $this->renderView();
+        App::redirectUser("home");
     }
 
     function logOutUser() {

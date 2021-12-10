@@ -16,6 +16,18 @@ class App {
 
     function getControllerFromUrl():string {
         $controller = explode("/", rtrim($_GET["url"]));
-        return !empty($controller[0]) ? $controller[0] : "index";
+        return !empty($controller[0]) ? $controller[0] : "home";
+    }
+
+    static function redirectUser(string $url) {
+        header("Location: {$url}");
+    }
+
+    static function isUserLoggedIn():bool {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return isset($_SESSION["username"]) ? true : false;
+        
     }
 }
