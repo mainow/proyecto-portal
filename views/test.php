@@ -8,9 +8,9 @@
 				<p class="login-box-msg">Inicia sesion para comenzar</p>
 				<?php
 				Form::create("", "POST", $params["formValidator"], [
-					new Field("text", "username", "Ingrese su usario", Validation::$USERNAME),
+					new Field("text", "username", "Ingrese su usario", Validation::$EMAIL),
 					new Field("password", "password", "Ingrese su contraseña", Validation::$PWD)],
-					"Ingresar"
+					"Ingresr"
 				);
 				?>
 			</div>

@@ -1,6 +1,6 @@
 <?php
 
-class Users extends Model {
+class UsersModel extends Model {
     function __construct() {
         require "config.php";
         parent::__construct($USERS_DB);

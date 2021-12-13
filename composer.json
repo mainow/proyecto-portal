@@ -1,0 +1,17 @@
+{
+    "name": "maino/proyecto-portal",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "maino",
+            "email": "mainohgz@gmail.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}

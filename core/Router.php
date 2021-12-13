@@ -28,7 +28,7 @@ class Router {
         $path = $this->getPathFromUrl();
         if (!isset($this->routes[$path])) {
             // 404 si no se encuentra
-            $this->requireController($this->routes["_404"]);
+            new $this->routes["_404"];
             exit;
         }
         // inicializar la clase que corresponde a esa url

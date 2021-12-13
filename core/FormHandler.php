@@ -5,24 +5,21 @@ class FormHandler {
      * FormHandler
      * * Validacion de formularios
      */
-    public function __construct(array $method, array $keywords)
-    {
-        $this->method = $method;
-        $this->keywords = $keywords;
-        $this->submittedData = $this->getSubmittedData();
+    static function requestValueExists(array $method, string $key) {
+        return isset($method[$key]) ? true : false;
     }
-
-    public function getSubmittedData():array {
+    
+    static function getSubmittedData(array $method, array $keywords):array {
         $keysOut = [];
-        foreach ($this->keywords as $keyword) {
-            if (isset($this->method[$keyword])) {
-                $keysOut[$keyword] = $this->method[$keyword];
+        foreach ($keywords as $keyword) {
+            if (isset($method[$keyword])) {
+                $keysOut[$keyword] = $method[$keyword];
             }
         }
         return $keysOut;
     }
 
-    public function emptyField(array $input):bool {
+    static function hasEmptyField(array $input):bool {
         foreach ($input as $data) {
             if (empty($data)) {
                 return true;
@@ -31,24 +28,26 @@ class FormHandler {
         return false;
     }
 
-    public function validEmail(string $email):bool {
+    static function isValidEmail(string $email):bool {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     } 
 
-    public function validUsername(string $username):bool {
-        // check if username only has letters
-        // return ctype_alpha($username);
-        return true;
+    static function isValidUsername(string $username):bool {
+        return strlen($username) >= 4;
+    }
+
+    static function isValidPassword(string $password):bool {
+        return strlen($password) >= 3;
     }
     
-    public function compatibleUsernameAndPassword(string $username, string $pwd):bool {
+    static function isCompatibleUsernameAndPassword(string $username, string $pwd):bool {
         if ($username != $pwd) {
             return true;
         }
         return false;
     }
 
-    public function passwordsMatch(string $pwd, string $pwdRepeat):bool {
+    static function passwordsMatch(string $pwd, string $pwdRepeat):bool {
         return $pwd == $pwdRepeat;
     }
 }

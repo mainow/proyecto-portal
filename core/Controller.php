@@ -8,11 +8,8 @@ class Controller {
      * la vista que se la pase por parametros
      * ! La vista tiene que ser el nombre de un archivo .php dentro de la carpeta /views/
      */
-    function __construct(string $viewName) {
+    function renderView(string $viewName, array $params=[]) {
         $this->view = new View($viewName);
-    }
-
-    function renderView() {
-        $this->view->render();
+        $this->view->render($params);
     }
 }
