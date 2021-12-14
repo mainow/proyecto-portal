@@ -41,13 +41,14 @@ class FormHandler {
     }
     
     static function isCompatibleUsernameAndPassword(string $username, string $pwd):bool {
-        if ($username != $pwd) {
-            return true;
-        }
-        return false;
+        return $username != $pwd;
     }
 
     static function passwordsMatch(string $pwd, string $pwdRepeat):bool {
         return $pwd == $pwdRepeat;
+    }
+
+    static function isValidPhoneNumber(string $number) {
+        return strlen($number) > 5;
     }
 }

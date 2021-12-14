@@ -7,8 +7,11 @@ class View {
      * ! Funciona trabajando con el modelo de layout + vista
      */
     public $NOLAYOUT_VIEWS = [
+        "login",
         "dashboard",
-        "login"
+        "base-dashboard",
+        "dashboard-edit-profile",
+        "dashboard-profile"
     ];
 
     function __construct(string $viewName) {

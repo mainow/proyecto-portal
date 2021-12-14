@@ -1,9 +1,3 @@
-<?php
-require "config.php";
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-3 d-flex justify-content-between">
         <a class="navbar-brand" href="#">Portal</a>

@@ -1,11 +1,12 @@
 <?php
 
 class Field {
-    function __construct(string $type, string $name, string $placeholder, $validation) {
+    function __construct(string $type, string $name, string $placeholder, $validation=null, string $fAIcon="fas fa-info-circle") {
         $this->type = $type;
         $this->name = $name;
         $this->placeholder = $placeholder;
-        $this->validation = $validation;
+        $this->validation = $validation ?? Validation::$TEXT;
+        $this->fAIcon = $fAIcon;
         $this->invalidFeedback = "";
     }
     
@@ -20,7 +21,7 @@ class Field {
             <input type="$this->type" name="$this->name" placeholder="$this->placeholder" class="form-control $cssClass">
             <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-user"></span>
+              <span class="$this->fAIcon"></span>
             </div>
           </div>
             <div class="invalid-feedback">

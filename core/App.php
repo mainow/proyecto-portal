@@ -6,12 +6,19 @@ class App {
      * * Inicializa el router
      * ? Funcionalidad de redireccionamiento y verificacion deberian estar aqui?
      */
+    
     function __construct(Router $router) {
         $router->resolve();
     }
 
+    
+    static function getBaseUrl():string {
+        return "http://{$_SERVER['HTTP_HOST']}";
+    }
+
     static function redirectUser(string $url) {
-        header("Location: {$url}");
+        $base = self::getBaseUrl();
+        header("Location: $base/$url");
     }
 
     static function isUserLoggedIn():bool {
@@ -22,7 +29,7 @@ class App {
     }
     
     static function accountExists(string $username, string $pwd):bool {
-        $users = new UsersModel;
+        $users = new UserModel;
         return $users->accountExists($username, $pwd);
     }
     
@@ -31,5 +38,12 @@ class App {
             session_start();
         }
         $_SESSION["username"] = $username;
+    }
+    
+    static function getLoggedInUser():string {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return $_SESSION["username"];
     }
 }

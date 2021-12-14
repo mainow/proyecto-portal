@@ -4,6 +4,7 @@ class Form {
     static function create(string $action, string $method, $validator, array $fields, string $submitBtnText) {
         $fieldsHTML = "";
         $submitAttachedValue = [];
+        $validator = $validator;
         foreach ($fields as $field) {
             $field->setInvalidFeedback($validator->getFieldFeedback($field->name));
             $submitAttachedValue[$field->name] = $field->validation;

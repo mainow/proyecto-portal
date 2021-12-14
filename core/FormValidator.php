@@ -13,13 +13,17 @@ class FormValidator extends FormHandler {
             Validation::$EMAIL => "Correo electronico invalido",
             Validation::$PWD => "Contraseña invalida",
             Validation::$USERNAME => "Nombre de usuario invalido",
-            Validation::$USERLOGIN => "Nombre de usuario o contraseña incorrectos"
+            Validation::$USERLOGIN => "Nombre de usuario o contraseña incorrectos",
+            Validation::$TEXT => "Campo Vacio",
+            Validation::$PHONENUMBER => "Numero de teléfono invalido"
         ];
         $this->validations = [
+            Validation::$TEXT => function ($value) { return !empty($value); },
             Validation::$EMAIL => function (string $email) { return $this::isValidEmail($email); },
             Validation::$PWD => function (string $pwd) { return $this::isValidPassword($pwd); },
             Validation::$USERNAME => function (string $username) { return $this::isValidUsername($username); },
-            Validation::$USERLOGIN => function (string $username, string $password) { return App::accountExists($username, $password); }
+            Validation::$USERLOGIN => function (string $username, string $password) { return App::accountExists($username, $password); },
+            Validation::$PHONENUMBER => function (string $number) { return $this::isValidPhoneNumber($number); }
         ];
         $this->appAction = $appAction;
         array_push($keywords, "submit");
@@ -45,6 +49,10 @@ class FormValidator extends FormHandler {
         }
         foreach ($this->submittedFields as $fieldName => $value) {
             $fieldValidation = $this->fieldsValidationsTypes[$fieldName];
+            if ($fieldValidation == Validation::$TEXT && $value == "") {
+                $this->fieldsFeedback[$fieldName] = $this->errors[Validation::$TEXT];
+                continue;
+            }
             if (!$this->validations[$fieldValidation]($value)) {
                 $this->fieldsFeedback[$fieldName] = $this->errors[$fieldValidation];
             }
