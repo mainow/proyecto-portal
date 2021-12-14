@@ -19,7 +19,7 @@ class Router {
         $path = $_SERVER["REQUEST_URI"] ?? "/";
         $pos = strpos($path, "?");
         // remover el / final de la url
-        if (substr($path, -1) == "/") {
+        if ($path != "/" && substr($path, -1) == "/") {
             $path = substr($path, 0, strlen($path) - 1);
         }
         if (!$pos) {

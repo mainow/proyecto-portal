@@ -1,11 +1,13 @@
 <?php
 
 class Form {
-    static function create(string $action, string $method, $validator, array $fields, string $submitBtnText) {
+    static function create(string $action, string $method, $validator, array $fields, string $submitBtnText, $fieldsValues=[]) {
         $fieldsHTML = "";
         $submitAttachedValue = [];
-        $validator = $validator;
         foreach ($fields as $field) {
+            if (isset($fieldsValues[$field->name])) {
+                $field->setValue($fieldsValues[$field->name]);
+            }
             $field->setInvalidFeedback($validator->getFieldFeedback($field->name));
             $submitAttachedValue[$field->name] = $field->validation;
             $fieldsHTML .= "\n$field";

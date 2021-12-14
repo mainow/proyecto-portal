@@ -31,7 +31,7 @@ class DataBase {
 
     function query(string $sql) {
         $q = mysqli_query($this->connection(), $sql);
-        if ($q->num_rows == 0) {
+        if (!is_bool($q) && $q->num_rows == 0) {
             return 0;
         }
         return $q;

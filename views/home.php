@@ -1,18 +1,9 @@
-<?php 
-require "config.php";
-?>
 <div class="d-flex align-items-center flex-column">
     <h1 class="display-1">Inicio</h1>
     <?php
-    if (isset($_SESSION["username"])) {
+    if (App::isUserLoggedIn()) {
         ?>
-        <h2>Hola <?php echo $_SESSION["username"] ?></h2>
-        <?php
-    }
-    ?>
-<?php
-    if (isset($_SESSION["username"])) {
-        ?>
+        <h2>Hola <?php echo App::getLoggedInUser() ?></h2>
         <a href="logout">Cerrar Session</a>
         <a href="dashboard">Ir al Dashboard</a>
         <?php

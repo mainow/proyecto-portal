@@ -33,17 +33,13 @@ class FormValidator extends FormHandler {
         }
         unset($this->submittedFields["submit"]);
     }
-
-    // function findUser($username, $password) {
-    //     return $this->findUserFunction();
-    // }
     
     function getFieldFeedback(string $fieldName):string {
         return $this->fieldsFeedback[$fieldName] ?? 0;
     }
     
     function validateFields() {
-        // solo validacion de campos (nombre de usuario mayor de 5 caracteres, etc)
+        // solo validacion de campos (nombre de usuario mayor a 5 caracteres, etc)
         if (count($this->submittedFields) == 0) {
             return;
         }
