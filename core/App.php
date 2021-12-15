@@ -40,10 +40,13 @@ class App {
         $_SESSION["username"] = $username;
     }
     
-    static function getLoggedInUser():string {
+    static function getLoggedInUser() {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return $_SESSION["username"];
+        if (self::isUserLoggedIn()) {
+            return $_SESSION["username"];
+        } 
+        return false;
     }
 }

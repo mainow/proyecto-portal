@@ -12,6 +12,6 @@
 				new Field("text", "city", "Ciudad", fAIcon:"fas fa-map-marked-alt"),
 				new Field("password", "password", "Contraseña", Validation::$PWD, "fas fa-key"),
 			], "Guardar", $params["fieldValues"] ?? []); ?>
-      </div><
+      </div>
     </section>
 </div>

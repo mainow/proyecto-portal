@@ -7,7 +7,6 @@ class Dashboard extends Controller {
 
     function handleUser(string $view) {
         if (App::isUserLoggedIn()){
-            $this->renderView("base-dashboard", ["username" => App::getLoggedInUser()]);
             $this->renderView($view);
             exit;
         } 

@@ -28,7 +28,6 @@ class ProfileEdit extends Dashboard {
             App::redirectUser("dashboard/profile/edit");
         }
         
-        $this->renderView("base-dashboard", [ "username" => App::getLoggedInUser() ]);
         $this->renderView("dashboard-edit-profile", ["username" => App::getLoggedInUser(), "formValidator" => $formValidator, "fieldValues" => $fieldValues ]);
     }
 }

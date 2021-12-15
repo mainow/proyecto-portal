@@ -1,3 +1,4 @@
+
 <?php
 
 class View {
@@ -6,12 +7,13 @@ class View {
      * * Clase padre de todas las vistas
      * ! Funciona trabajando con el modelo de layout + vista
      */
-    public $NOLAYOUT_VIEWS = [
-        "login",
-        "dashboard",
-        "base-dashboard",
-        "dashboard-edit-profile",
-        "dashboard-profile"
+    public $VIEWS_LAYOUTS = [
+        "home" => "main",
+        "login" => "",
+        "dashboard" => "dashboard",
+        "base-dashboard" => "dashboard",
+        "dashboard-edit-profile" => "dashboard",
+        "dashboard-profile" => "dashboard",
     ];
 
     function __construct(string $viewName) {
@@ -24,16 +26,19 @@ class View {
 
     function getViewHtml(array $params=[]) {
         $htmlHeadContent = $this->getFileContent("views/layouts/head.php");
-        $layoutContent = $this->getFileContent("views/layouts/main.php");
+        $layoutName = $this->VIEWS_LAYOUTS[$this->viewName];
+        $layoutContent = $layoutName == "" ? "<div>{{ content }}</div>" : $this->getFileContent("views/layouts/{$this->VIEWS_LAYOUTS[$this->viewName]}.php");
         $jsScriptsContent = $this->getFileContent("views/layouts/scripts.php");
         $viewContent = $this->getFileContent("views/{$this->viewName}.php", $params);
-        $bodyContent = in_array($this->viewName, $this->NOLAYOUT_VIEWS) ? $viewContent : str_replace("{{ content }}", $viewContent, $layoutContent);
+        $bodyContent = str_replace("{{ content }}", $viewContent, $layoutContent);
         return <<<HTML
         <html>
-            {$htmlHeadContent}
+        {$htmlHeadContent}
         <body>
-            {$bodyContent}
-            {$jsScriptsContent}
+            <div class="wrapper">
+                {$bodyContent}
+            </div>
+                {$jsScriptsContent}
         </body>
         </html>
         HTML;
