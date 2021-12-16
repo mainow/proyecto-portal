@@ -25,7 +25,7 @@ class App {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return isset($_SESSION["username"]) ? true : false;
+        return isset($_SESSION["id"]) ? true : false;
     }
     
     static function accountExists(string $username, string $pwd):bool {
@@ -37,7 +37,7 @@ class App {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        $_SESSION["username"] = $username;
+        $_SESSION["id"] = $username;
     }
     
     static function getLoggedInUser() {
@@ -45,8 +45,15 @@ class App {
             session_start();
         }
         if (self::isUserLoggedIn()) {
-            return $_SESSION["username"];
+            return $_SESSION["id"];
         } 
         return false;
+    }
+
+    static function isAdminLoggedIn() {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        return $_SESSION["id"] == "112233";
     }
 }

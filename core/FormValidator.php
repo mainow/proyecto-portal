@@ -58,10 +58,10 @@ class FormValidator extends FormHandler {
         }
         // validacion de login 
         if ($this->appAction == Actions::$LOGIN) {
-            if (!$this->validations[Validation::$USERLOGIN]($this->submittedFields["username"], $this->submittedFields["password"])) {
-                $this->fieldsFeedback["username"] = $this->errors[Validation::$USERLOGIN];
+            if (!$this->validations[Validation::$USERLOGIN]($this->submittedFields["id"], $this->submittedFields["password"])) {
+                $this->fieldsFeedback["id"] = $this->errors[Validation::$USERLOGIN];
             } else {
-                App::setUserLogin($this->submittedFields["username"]);
+                App::setUserLogin($this->submittedFields["id"]);
             }
         }
     }

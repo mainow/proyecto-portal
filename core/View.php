@@ -10,10 +10,12 @@ class View {
     public $VIEWS_LAYOUTS = [
         "home" => "main",
         "login" => "",
+        "badrequest" => "main",
         "dashboard" => "dashboard",
         "base-dashboard" => "dashboard",
         "dashboard-edit-profile" => "dashboard",
         "dashboard-profile" => "dashboard",
+        "dashboard-add-user" => "dashboard"
     ];
 
     function __construct(string $viewName) {
@@ -34,12 +36,8 @@ class View {
         return <<<HTML
         <html>
         {$htmlHeadContent}
-        <body>
-            <div class="wrapper">
-                {$bodyContent}
-            </div>
-                {$jsScriptsContent}
-        </body>
+        {$bodyContent}
+        {$jsScriptsContent}
         </html>
         HTML;
     }
