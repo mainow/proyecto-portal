@@ -1,6 +1,11 @@
 <?php
 
 class Form {
+    /**
+     * Form
+     * * Permite crear formularios de manera dinamica
+     * Consigue establecer validaciones, establecer valores por defecto un <input>, etc.
+     */
     static function create(string $action, string $method, $validator, array $fields, string $submitBtnText, $fieldsValues=[]) {
         $fieldsHTML = "";
         $submitAttachedValue = [];

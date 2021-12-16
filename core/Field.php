@@ -1,6 +1,13 @@
 <?php
 
 class Field {
+    /**
+     * Field
+     * * Crea un <input> que de manera dinamica
+     * Permite crear inputs y establecer parametros, validations, labels, iconos, etc.
+     * ! Debe ser llamado como un string para renderisarse el input
+     * ej: echo(new Field("text"...));
+     */
     function __construct(string $type, string $name, string $placeholder, $validation=null, string $fAIcon="fas fa-info-circle", string $label="") {
         $this->type = $type;
         $this->name = $name;

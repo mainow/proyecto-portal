@@ -30,14 +30,12 @@ class View {
         $htmlHeadContent = $this->getFileContent("views/layouts/head.php");
         $layoutName = $this->VIEWS_LAYOUTS[$this->viewName];
         $layoutContent = $layoutName == "" ? "<div>{{ content }}</div>" : $this->getFileContent("views/layouts/{$this->VIEWS_LAYOUTS[$this->viewName]}.php");
-        $jsScriptsContent = $this->getFileContent("views/layouts/scripts.php");
         $viewContent = $this->getFileContent("views/{$this->viewName}.php", $params);
         $bodyContent = str_replace("{{ content }}", $viewContent, $layoutContent);
         return <<<HTML
         <html>
         {$htmlHeadContent}
         {$bodyContent}
-        {$jsScriptsContent}
         </html>
         HTML;
     }

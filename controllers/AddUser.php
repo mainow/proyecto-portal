@@ -2,6 +2,7 @@
 
 class AddUser extends Dashboard {
     function __construct() {
+        // redireccionar a login si admin no esta login
         if (!App::isAdminLoggedIn()) {
             App::redirectUser("login");
         }
@@ -11,10 +12,12 @@ class AddUser extends Dashboard {
         if (!$formValidator->hasInvalidFields() && count($formValidator->submittedFields) > 0) {
             $data = $formValidator->submittedFields;
             $users = new UserModel();
+            // añadir usuario a la base de datos
             if ($users->addUser($data["first-name"], $data["last-name"], $data["id"], $data["pwd"], $data["born-date"], $data["email"], $data["category"], $data["entry-date"]) != 0) {
                 App::redirectUser("dashboard");
                 exit;
             }
+            // si no se pudo añadir al usurio por algun error se pone este texto en la cima del formulario
             $feedback = "<div class='text-danger'>Ya existe un usuario con el mismo documento o email!</div>";
         }
         $this->renderView("dashboard-add-user", [ "addUserValidator" => $formValidator, "fieldValues" => $formValidator->submittedFields, "feedback" => $feedback]);

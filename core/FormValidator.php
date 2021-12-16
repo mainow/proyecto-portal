@@ -2,7 +2,7 @@
 
 class FormValidator extends FormHandler {
     /**
-     * FormHandler
+     * FormValidator
      * * Validacion de formularios
      */
     public $fieldsFeedback = [];
