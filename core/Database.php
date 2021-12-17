@@ -1,18 +1,5 @@
 <?php
 
-class DataBaseInfo {
-    /**
-     * DataBaseInfo
-     * * Provee una manera simple de inicializar los datos de una base de datos
-     */
-    function __construct(string $dbHost, string $dbUser, string $dbPwd, string $dbDatabase) {
-        $this->host = $dbHost;
-        $this->user = $dbUser;
-        $this->pwd = $dbPwd;
-        $this->database = $dbDatabase;
-    }
-}
-
 class DataBase {
     /**
      * Database
@@ -31,9 +18,6 @@ class DataBase {
 
     function query(string $sql) {
         $q = mysqli_query($this->connection(), $sql);
-        if (!is_bool($q) && $q->num_rows == 0) {
-            return 0;
-        }
-        return $q;
+        return !is_bool($q) && $q->num_rows == 0 ? 0 : $q;
     }
 }

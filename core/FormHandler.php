@@ -9,6 +9,11 @@ class FormHandler {
         return isset($method[$key]) ? true : false;
     }
     
+    static function categoryIsUnique(string $category) {
+        $data = new DataModel;
+        return $data->getCategory($category);
+    }
+
     static function getSubmittedData(array $method, array $keywords):array {
         $keysOut = [];
         foreach ($keywords as $keyword) {

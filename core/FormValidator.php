@@ -7,7 +7,7 @@ class FormValidator extends FormHandler {
      */
     public $fieldsFeedback = [];
     
-    function __construct(string $appAction, array $method, array $keywords) {
+    function __construct(string $appAction, array $method, array $keywords, string $submitButtonName) {
 
         $this->errors = [
             Validation::$EMAIL => "Correo electronico invalido",
@@ -15,7 +15,8 @@ class FormValidator extends FormHandler {
             Validation::$USERNAME => "Nombre de usuario invalido",
             Validation::$USERLOGIN => "Nombre de usuario o contraseña incorrectos",
             Validation::$TEXT => "Campo Vacio",
-            Validation::$PHONENUMBER => "Numero de teléfono invalido"
+            Validation::$PHONENUMBER => "Numero de teléfono invalido",
+            Validation::$CATEGORYEXISTS => "La categoria ya existe!"
         ];
         $this->validations = [
             Validation::$TEXT => function ($value) { return !empty($value); },
@@ -23,15 +24,17 @@ class FormValidator extends FormHandler {
             Validation::$PWD => function (string $pwd) { return $this::isValidPassword($pwd); },
             Validation::$USERNAME => function (string $username) { return $this::isValidUsername($username); },
             Validation::$USERLOGIN => function (string $username, string $password) { return App::accountExists($username, $password); },
-            Validation::$PHONENUMBER => function (string $number) { return $this::isValidPhoneNumber($number); }
+            Validation::$PHONENUMBER => function (string $number) { return $this::isValidPhoneNumber($number); },
+            Validation::$CATEGORYEXISTS => function (string $category) { return !$this::categoryIsUnique($category) || !empty($value); }
         ];
+
         $this->appAction = $appAction;
-        array_push($keywords, "submit");
+        array_push($keywords, $submitButtonName);
         $this->submittedFields = $this::getSubmittedData($method, $keywords);
-        if (isset($this->submittedFields["submit"])) {
-            $this->fieldsValidationsTypes = json_decode($this->submittedFields["submit"], true);
+        if (isset($this->submittedFields[$submitButtonName])) {
+            $this->fieldsValidationsTypes = json_decode($this->submittedFields[$submitButtonName], true);
         }
-        unset($this->submittedFields["submit"]);
+        unset($this->submittedFields[$submitButtonName]);
     }
     
     function getFieldFeedback(string $fieldName):string {
@@ -57,6 +60,7 @@ class FormValidator extends FormHandler {
             return;
         }
         // validacion de login 
+        // ! buscar otro implementacion, el validador no deberia de inicar sesion
         if ($this->appAction == Actions::$LOGIN) {
             if (!$this->validations[Validation::$USERLOGIN]($this->submittedFields["id"], $this->submittedFields["password"])) {
                 $this->fieldsFeedback["id"] = $this->errors[Validation::$USERLOGIN];

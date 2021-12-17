@@ -13,9 +13,9 @@ class View {
         "badrequest" => "main",
         "dashboard" => "dashboard",
         "base-dashboard" => "dashboard",
-        "dashboard-edit-profile" => "dashboard",
         "dashboard-profile" => "dashboard",
-        "dashboard-add-user" => "dashboard"
+        "dashboard-add-user" => "dashboard",
+        "dashboard-categories" => "dashboard"
     ];
 
     function __construct(string $viewName) {
@@ -28,14 +28,16 @@ class View {
 
     function getViewHtml(array $params=[]) {
         $htmlHeadContent = $this->getFileContent("views/layouts/head.php");
+        $jsScripts = $this->getFileContent("views/layouts/jsScripts.php");
         $layoutName = $this->VIEWS_LAYOUTS[$this->viewName];
         $layoutContent = $layoutName == "" ? "<div>{{ content }}</div>" : $this->getFileContent("views/layouts/{$this->VIEWS_LAYOUTS[$this->viewName]}.php");
         $viewContent = $this->getFileContent("views/{$this->viewName}.php", $params);
         $bodyContent = str_replace("{{ content }}", $viewContent, $layoutContent);
         return <<<HTML
         <html>
-        {$htmlHeadContent}
-        {$bodyContent}
+        $htmlHeadContent
+        $bodyContent
+        $jsScripts
         </html>
         HTML;
     }

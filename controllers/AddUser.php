@@ -7,7 +7,7 @@ class AddUser extends Dashboard {
             App::redirectUser("login");
         }
         $feedback = "";
-        $formValidator = new FormValidator(Actions::$ADDUSER, $_POST, ["first-name", "last-name", "id", "pwd", "born-date", "email", "category", "entry-date"]);
+        $formValidator = new FormValidator(Actions::$ADDUSER, $_POST, ["first-name", "last-name", "id", "pwd", "born-date", "email", "category", "entry-date"], "submit-add-user");
         $formValidator->validateFields();
         if (!$formValidator->hasInvalidFields() && count($formValidator->submittedFields) > 0) {
             $data = $formValidator->submittedFields;
@@ -20,7 +20,9 @@ class AddUser extends Dashboard {
             // si no se pudo añadir al usurio por algun error se pone este texto en la cima del formulario
             $feedback = "<div class='text-danger'>Ya existe un usuario con el mismo documento o email!</div>";
         }
-        $this->renderView("dashboard-add-user", [ "addUserValidator" => $formValidator, "fieldValues" => $formValidator->submittedFields, "feedback" => $feedback]);
+        $formData = new DataModel;
+        $categories = $formData->getCategories();
+        $this->renderView("dashboard-add-user", [ "addUserValidator" => $formValidator, "fieldValues" => $formValidator->submittedFields, "feedback" => $feedback, "categories" => $categories]);
         exit;
     }
 }

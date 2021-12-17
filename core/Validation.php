@@ -8,4 +8,5 @@ class Validation {
     static $PWD = "PWD_VALIDATION";
     static $USERNAME = "USERNAME_VALIDATION";
     static $USERLOGIN = "USERLOGIN_VALIDATION";
+    static $CATEGORYEXISTS = "CATEGORYEXISTS_VALIDATION";
 }

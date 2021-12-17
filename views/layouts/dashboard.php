@@ -3,9 +3,9 @@
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
-                <!-- <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li> -->
+                </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="/" class="nav-link">Inicio</a>
                 </li>
@@ -50,6 +50,14 @@
                                 <i class="nav-icon fas fa-user-plus"></i>
                                 <p>
                                     Añadir Usuario
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="<?php echo App::getBaseUrl()?>/dashboard/categories" class="nav-link">
+                                <i class="nav-icon fab fa-firstdraft"></i>
+                                <p>
+                                    Categorias
                                 </p>
                             </a>
                         </li>

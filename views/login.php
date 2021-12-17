@@ -8,9 +8,9 @@
 				<p class="login-box-msg">Inicia sesion para comenzar</p>
 				<?php
 				Form::create("", "POST", $params["formValidator"], [
-					new Field("text", "id", "Ingrese su cedula", Validation::$USERNAME),
-					new Field("password", "password", "Ingrese su contraseña", Validation::$PWD)],
-					"Ingresar"
+					new InputWidget("text", "id", "Ingrese su cedula", Validation::$USERNAME),
+					new InputWidget("password", "password", "Ingrese su contraseña", Validation::$PWD)],
+					new ButtonWidget("submit-login", "Iniciar Sesion", "btn-block")
 				);
 				?>
 			</div>

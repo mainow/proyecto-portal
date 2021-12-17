@@ -1,5 +1,7 @@
 <?php
 
+require_once "core/DbInfo.php"; // ! autoloader no funciona
+
 class UserModel extends Model {
     public $DB_FIRSTNAME = "first_name";
     public $DB_LASTNAME = "last_name";
@@ -9,10 +11,10 @@ class UserModel extends Model {
     public $DB_EMAIL = "email";
     public $DB_CATEGORY = "category";
     public $DB_ENTRYDATE = "entry_date";
-    protected $DB_TABLENAME = "proyecto_portal";
+    protected $DB_TABLENAME = "users";
 
     function __construct() {
-        require "config.php";
+        $USERS_DB = new DataBaseInfo("localhost", "root", "", "proyecto_portal");
         parent::__construct($USERS_DB);
     }
 
