@@ -4,7 +4,7 @@
     echo $params["feedback"];
     $options = [];
     foreach ($params["categories"] as $category) {
-        $options[] = new OptionWidget($category[0], $category[0]);
+        $options[] = new OptionWidget($category[0], $category[1]);
     }
     Form::create("", "POST", $params["addUserValidator"], [
         [
@@ -13,11 +13,13 @@
         ],
         [ 
             new InputWidget("password", "pwd", "Contraseña", Validation::$PWD, "fas fa-key", "Contraseña"),
-            new InputWidget("text", "id", "DN/LC/Pasaporte", fAIcon:"fas fa-id-card", label:"Numero de documento"),
+            new InputWidget("number", "id", "DN/LC/Pasaporte", fAIcon:"fas fa-id-card", label:"Numero de documento"),
             new InputWidget("date", "born-date", "", fAIcon: "fas fa-birthday-cake", label:"Fecha de nacimiento")
         ],
-        new InputWidget("email", "email", "Correo electronico", fAIcon:"fas fa-envelope", label:"Email"),
-        new SelectWidget("category", $options, "Categoria"),
+        [
+            new InputWidget("email", "email", "Correo electronico", fAIcon:"fas fa-envelope", label:"Email"),
+            new SelectWidget("category", $options, "Categoria"),
+        ],
         new InputWidget("date", "entry-date", "", fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
     ], new ButtonWidget("submit-add-user", "Crear Usuario", cssClasses:"btn-block"), $params["fieldValues"]);
     ?>

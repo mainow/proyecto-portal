@@ -23,7 +23,7 @@ class UserModel extends Model {
         $query = $this->db->query($sql);
         return $query ? mysqli_fetch_assoc($query) : 0;
     }
-
+    
     function addUser(string $firstName, string $lastName, int $id, string $password, string $bornDate, string $email, string $category, string $entryDate) {
         $fields = "$this->DB_FIRSTNAME, $this->DB_LASTNAME, $this->DB_ID, $this->DB_PASSWORD, $this->DB_BORNDATE, $this->DB_EMAIL, $this->DB_CATEGORY, $this->DB_ENTRYDATE";
         $values = "'$firstName', '$lastName', $id, '$password', '$bornDate', '$email', '$category', '$entryDate'";
@@ -51,5 +51,11 @@ class UserModel extends Model {
         $sql = "UPDATE $this->DB_TABLENAME SET $fieldName=$value WHERE username=$username";
         $query = $this->db->query($sql);
         return $query ? true : false;
+    }
+
+    function getUsersByData(string $label, $value) {
+        $sql = "SELECT * FROM $this->DB_TABLENAME WHERE $label='$value'";
+        $query = $this->db->query($sql);
+        return $query ? mysqli_fetch_assoc($query) : 0;
     }
 }

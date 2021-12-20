@@ -8,7 +8,7 @@ class InputWidget extends Widget {
      * ! Debe ser llamado como un string para renderisarse el input
      * ej: echo(new Field("text"...));
      */
-    function __construct(string $type, string $name, string $placeholder, string $validation="", string $fAIcon="fas fa-info-circle", string $label="", string $cssClasses="", string $style="") {
+    function __construct(string $type, string $name, string $placeholder, string $validation="", string $fAIcon="fas fa-info-circle", string $label="", string $cssClasses="", string $style="", string $properties="") {
         $this->type = $type;
         parent::__construct($name, $validation);
         $this->placeholder = $placeholder;
@@ -18,6 +18,7 @@ class InputWidget extends Widget {
         $this->label = $label;
         $this->cssClasses= $cssClasses;
         $this->style = $style;
+        $this->properties = $properties;
     }
 
     function __toString() {
@@ -29,7 +30,7 @@ class InputWidget extends Widget {
         <div class="col-md mb-3 $this->cssClasses" style="$this->style">
             $label
             <div class="input-group">
-                <input type="$this->type" required name="$this->name" value="$this->value" placeholder="$this->placeholder" class="form-control $isInvalidCssClass">
+                <input type="$this->type" required name="$this->name" value="$this->value" placeholder="$this->placeholder" class="form-control $isInvalidCssClass" $this->properties>
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="$this->fAIcon"></span>

@@ -2,3 +2,4 @@ dist/
 plugins/
 vendor/
 .env
+todos.txt

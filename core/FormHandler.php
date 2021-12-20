@@ -9,9 +9,9 @@ class FormHandler {
         return isset($method[$key]) ? true : false;
     }
     
-    static function categoryIsUnique(string $category) {
+    static function categoryIsUnique(string $name) {
         $data = new DataModel;
-        return $data->getCategory($category);
+        return $data->getCategory($name);
     }
 
     static function getSubmittedData(array $method, array $keywords):array {

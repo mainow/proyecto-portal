@@ -13,7 +13,6 @@ class AddUser extends Dashboard {
             $data = $formValidator->submittedFields;
             $users = new UserModel();
             // añadir usuario a la base de datos
-            var_dump($data);
             if ($users->addUser($data["first-name"], $data["last-name"], $data["id"], $data["pwd"], $data["born-date"], $data["email"], $data["category"], $data["entry-date"]) != 0) {
                 App::redirectUser("dashboard");
                 exit;
