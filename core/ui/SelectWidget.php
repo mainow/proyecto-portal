@@ -15,7 +15,7 @@ class SelectWidget extends Widget {
         return <<<HTML
         <div class="col-md mb-3">
             <label class="form-label">$this->label</label>
-            <select class="custom-select">
+            <select name="$this->name" class="custom-select">
                 $optionsHtml
             </select>
         </div>

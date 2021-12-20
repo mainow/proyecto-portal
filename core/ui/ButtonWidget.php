@@ -1,11 +1,12 @@
 <?php
 
 class ButtonWidget extends Widget {
-    function __construct(string $name, string $text, string $cssClasses="", string $style="") {
+    function __construct(string $name, string $text, string $value=null, string $cssClasses="", string $style="") {
         parent::__construct($name, "");
         $this->text = $text;
         $this->cssClasses = $cssClasses;
         $this->style = $style;
+        $this->value = $value;
     }
 
     function __toString() {

@@ -15,6 +15,11 @@ class DataModel extends Model {
         return $query ? mysqli_fetch_all($query) : 0; 
     }
     
+    function removeCategory($category) {
+        $sql = "DELETE FROM data WHERE categories='$category'";
+        $query = $this->db->query($sql);
+    }
+
     function addCategory(string $category) {
         $sql = "INSERT INTO data (categories) VALUES ('$category')";
         $this->db->query($sql);

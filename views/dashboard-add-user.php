@@ -17,10 +17,9 @@
             new InputWidget("date", "born-date", "", fAIcon: "fas fa-birthday-cake", label:"Fecha de nacimiento")
         ],
         new InputWidget("email", "email", "Correo electronico", fAIcon:"fas fa-envelope", label:"Email"),
-        // new InputWidget("text", "category", "Categoria", fAIcon:"fas fa-trophy", label:"Categoria"),
         new SelectWidget("category", $options, "Categoria"),
         new InputWidget("date", "entry-date", "", fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
-    ], new ButtonWidget("submit-add-user", "Crear Usuario", "btn-block"), $params["fieldValues"]);
+    ], new ButtonWidget("submit-add-user", "Crear Usuario", cssClasses:"btn-block"), $params["fieldValues"]);
     ?>
     
 </div>

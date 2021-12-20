@@ -6,4 +6,5 @@ class Actions {
     static $EDITPROFILE =  "EDITPROFILE_ACTION";
     static $ADDUSER = "ADDUSER_ACTION";
     static $ADDCATEGORY = "ADDCATEGORY_ACTION";
+    static $REMOVECATEGORY = "REMOVECATEGORY_ACTION";
 }

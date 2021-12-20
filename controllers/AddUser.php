@@ -13,12 +13,15 @@ class AddUser extends Dashboard {
             $data = $formValidator->submittedFields;
             $users = new UserModel();
             // añadir usuario a la base de datos
+            var_dump($data);
             if ($users->addUser($data["first-name"], $data["last-name"], $data["id"], $data["pwd"], $data["born-date"], $data["email"], $data["category"], $data["entry-date"]) != 0) {
                 App::redirectUser("dashboard");
                 exit;
             }
             // si no se pudo añadir al usurio por algun error se pone este texto en la cima del formulario
-            $feedback = "<div class='text-danger'>Ya existe un usuario con el mismo documento o email!</div>";
+            $feedback = <<<HTML
+            <div class='text-danger'>Ya existe un usuario con el mismo documento o email!</div>
+            HTML;
         }
         $formData = new DataModel;
         $categories = $formData->getCategories();

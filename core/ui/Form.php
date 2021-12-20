@@ -26,7 +26,7 @@ class Form {
                 continue;
             } 
 
-            // cuando solo se pasa un campo
+            // cuando el campo no es un array
             if (isset($fieldsValues[$field->name])) {
                 $field->value = $fieldsValues[$field->name];
             }
@@ -35,7 +35,7 @@ class Form {
             $fieldsHTML .= "\n$field";
         }
         $submitAttachedValue = json_encode($submitAttachedValue);
-        $submitBtn->value = $submitAttachedValue;
+        $submitBtn->value = $submitBtn->value ?? $submitAttachedValue;
         echo <<<HTML
         <form action="$action" method="$method" class="$cssClasses">
             $fieldsHTML

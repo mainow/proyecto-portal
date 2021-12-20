@@ -10,7 +10,7 @@
 				Form::create("", "POST", $params["formValidator"], [
 					new InputWidget("text", "id", "Ingrese su cedula", Validation::$USERNAME),
 					new InputWidget("password", "password", "Ingrese su contraseña", Validation::$PWD)],
-					new ButtonWidget("submit-login", "Iniciar Sesion", "btn-block")
+					new ButtonWidget("submit-login", "Iniciar Sesion", cssClasses:"btn-block")
 				);
 				?>
 			</div>
