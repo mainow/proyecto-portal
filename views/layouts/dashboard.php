@@ -46,10 +46,10 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <?php if (App::isAdminLoggedIn()) {?>
                         <li class="nav-item">
-                            <a href="<?php echo App::getBaseUrl()?>/dashboard/add-user" class="nav-link">
-                                <i class="nav-icon fas fa-user-plus"></i>
+                            <a href="<?php echo App::getBaseUrl()?>/dashboard/users" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Añadir Usuario
+                                    Usuarios
                                 </p>
                             </a>
                         </li>

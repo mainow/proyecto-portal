@@ -14,7 +14,7 @@ class View {
         "dashboard" => "dashboard",
         "base-dashboard" => "dashboard",
         "dashboard-profile" => "dashboard",
-        "dashboard-add-user" => "dashboard",
+        "dashboard-users" => "dashboard",
         "dashboard-categories" => "dashboard"
     ];
 

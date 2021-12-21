@@ -1,6 +1,6 @@
 <?php
 
-class AddUser extends Dashboard {
+class Users extends Dashboard {
     function __construct() {
         // redireccionar a login si admin no esta login
         if (!App::isAdminLoggedIn()) {
@@ -24,7 +24,7 @@ class AddUser extends Dashboard {
         }
         $formData = new DataModel;
         $categories = $formData->getCategories();
-        $this->renderView("dashboard-add-user", [ "addUserValidator" => $formValidator, "fieldValues" => $formValidator->submittedFields, "feedback" => $feedback, "categories" => $categories]);
+        $this->renderView("dashboard-users", [ "addUserValidator" => $formValidator, "fieldValues" => $formValidator->submittedFields, "feedback" => $feedback, "categories" => $categories]);
         exit;
     }
 }
