@@ -24,6 +24,17 @@ class UserModel extends Model {
         return $query ? mysqli_fetch_assoc($query) : 0;
     }
     
+    function getAllUsers() {
+        $sql = "SELECT * FROM $this->DB_TABLENAME WHERE first_name!='admin'";
+        $query = $this->db->query($sql);
+        return $query ? mysqli_fetch_all($query) : 0;
+
+    }
+
+    function getUserCount():int {
+        return count($this->getAllUsers());
+    }
+    
     function addUser(string $firstName, string $lastName, int $id, string $password, string $bornDate, string $email, string $category, string $entryDate) {
         $fields = "$this->DB_FIRSTNAME, $this->DB_LASTNAME, $this->DB_ID, $this->DB_PASSWORD, $this->DB_BORNDATE, $this->DB_EMAIL, $this->DB_CATEGORY, $this->DB_ENTRYDATE";
         $values = "'$firstName', '$lastName', $id, '$password', '$bornDate', '$email', '$category', '$entryDate'";
@@ -33,6 +44,20 @@ class UserModel extends Model {
         }
         $query = $this->db->query($sql);
         return 1;
+    }
+    
+    function editUser(int $userId, string $firstName, string $lastName, int $id, string $bornDate, string $email, string $category, string $entryDate) {
+        $sql = "UPDATE $this->DB_TABLENAME
+                SET 
+                $this->DB_FIRSTNAME='$firstName',
+                $this->DB_LASTNAME='$lastName',
+                $this->DB_ID='$id',
+                $this->DB_BORNDATE='$bornDate',
+                $this->DB_EMAIL='$email',
+                $this->DB_CATEGORY='$category',
+                $this->DB_ENTRYDATE='$entryDate'
+                WHERE id=$userId";
+        $this->db->query($sql);
     }
 
     function valueExists(string $field, string $value) {

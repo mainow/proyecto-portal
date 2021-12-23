@@ -2,10 +2,10 @@
 
 class Actions {
     static $LOGIN = "LOGIN_ACTION";
-    static $SINGUP = "LOGIN_ACTION";
     static $EDITPROFILE =  "EDITPROFILE_ACTION";
     static $ADDUSER = "ADDUSER_ACTION";
     static $ADDCATEGORY = "ADDCATEGORY_ACTION";
     static $REMOVECATEGORY = "REMOVECATEGORY_ACTION";
     static $EDITCATEGORY = "EDITCATEGORY_ACTION";
+    static $EDITUSER = "EDITUSER_ACTION";
 }

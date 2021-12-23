@@ -1,3 +1,26 @@
+<style>
+    .dataTable {
+        border: 0 !important
+    }
+
+    .dataTable tr button {
+        visibility: hidden;
+    }
+
+    .modal button {
+        visibility: visible !important;    
+    }
+
+    .dataTable tr:hover button {
+        visibility: visible;
+    }
+
+    .dataTable thead th {
+        padding: .7em !important;
+        border: 0 !important;
+    }
+
+</style>
 <body class="hold-transition sidebar-mini layout-fixed">    
     <div class="wrapper">
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -69,7 +92,7 @@
         <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
-            <section class="content">
+            <section class="content px-4">
                 {{ content }}
             </section>
         </div>

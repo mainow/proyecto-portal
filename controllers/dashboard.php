@@ -2,14 +2,13 @@
 
 class Dashboard extends Controller {
     function __construct() {
-        $this->handleUser("dashboard");
+        $this->handleAdminVisit();
+        $this->renderView("dashboard");
     }
 
-    function handleUser(string $view) {
-        if (App::isUserLoggedIn()){
-            $this->renderView($view);
-            exit;
-        } 
-        App::redirectUser("login");
+    function handleAdminVisit() {
+        if (!App::isAdminLoggedIn()) {
+            App::redirectUser("login");
+        }
     }
 }

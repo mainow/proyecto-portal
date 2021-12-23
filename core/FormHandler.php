@@ -14,6 +14,16 @@ class FormHandler {
         return $data->getCategory($name);
     }
 
+    static function isIdInUse(string $id) {
+        $users = new UserModel;
+        return $users->valueExists("id", $id);
+    }
+
+    static function isEmailInUse(string $email) {
+        $users = new UserModel;
+        return $users->valueExists("email", $email);
+    }
+
     static function getSubmittedData(array $method, array $keywords):array {
         $keysOut = [];
         foreach ($keywords as $keyword) {

@@ -1,7 +1,11 @@
 <?php
 
 class ButtonWidget extends Widget {
-    function __construct(string $name, string $text, string $value=null, string $cssClasses="", string $style="", string $properties="") {
+    /**
+     * ButtonWidget
+     * * Crea un boton cone estilos y funcionalidades para un form
+     */
+    function __construct(string $name, string $text, $value=null, string $cssClasses="", string $style="", string $properties="") {
         parent::__construct($name, "");
         $this->text = $text;
         $this->cssClasses = $cssClasses;
@@ -12,8 +16,10 @@ class ButtonWidget extends Widget {
 
     function __toString() {
         $cssClasses = $this->cssClasses;
+        $properties = $this->properties;
+        $value = $this->value;
         return <<<HTML
-        <button class="btn btn-primary $cssClasses" name="$this->name" style="$this->style" $this->properties value=$this->value>$this->text</button>
+        <button class="btn btn-primary $cssClasses" name="$this->name" style="$this->style" $properties value=$value>$this->text</button>
         HTML;
     }
 }

@@ -7,7 +7,7 @@
 			<div class="card-body login-card-body">
 				<p class="login-box-msg">Inicia sesion para comenzar</p>
 				<?php
-				Form::create("", "POST", $params["formValidator"], [
+				echo new FormWidget("", "POST", $params["formValidator"], [
 					new InputWidget("text", "id", "Ingrese su cedula", Validation::$USERNAME),
 					new InputWidget("password", "password", "Ingrese su contraseña", Validation::$PWD)],
 					new ButtonWidget("submit-login", "Iniciar Sesion", cssClasses:"btn-block")
