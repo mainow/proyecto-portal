@@ -89,11 +89,8 @@ class FormValidator extends FormHandler {
             return;
         }
         // validacion de login 
-        // ! buscar otro implementacion, el validador no deberia de inicar sesion
         if ($this->appAction == Actions::$LOGIN && !$this->validations[Validation::$USERLOGIN]($this->submittedFields["id"], $this->submittedFields["password"])) {
-                $this->fieldsFeedback["id"] = $this->errors[Validation::$USERLOGIN];
-        } else if($this->appAction == Actions::$LOGIN) {
-            App::setUserLogin($this->submittedFields["id"]);
+            $this->fieldsFeedback["id"] = $this->errors[Validation::$USERLOGIN];
         }
     }
 

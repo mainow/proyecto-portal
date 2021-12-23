@@ -2,7 +2,6 @@
 
 class Dashboard extends Controller {
     function __construct() {
-        $this->handleAdminVisit();
         $this->renderView("dashboard");
     }
 

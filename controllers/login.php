@@ -2,12 +2,11 @@
 
 class Login extends Controller {
     function __construct() {
-        $formValidator = new FormValidator(Actions::$LOGIN, $_POST, ["id", "password"], "submit-login");
-        $formValidator->validateFields();
-        if ($formValidator->hasInvalidFields() || !App::isUserLoggedIn()) {
-            $this->renderView("login", [ "formValidator" => $formValidator ]);
-            exit;
+        $loginValidator = new FormValidator(Actions::$LOGIN, $_POST, ["id", "password"], "submit-login");
+        if ($loginValidator->wasValidated() && !$loginValidator->hasInvalidFields() && App::accountExists($loginValidator->submittedFields["id"], $loginValidator->submittedFields["password"])) {
+            App::setUserLogin($loginValidator->submittedFields["id"]);
+            App::redirectUser("dashboard");
         }
-        App::redirectUser("dashboard");
+        $this->renderView("login", [ "loginValidator" => $loginValidator ]);
     }
 }
