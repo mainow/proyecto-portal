@@ -2,6 +2,9 @@
 
 class Profile extends Dashboard {
     function __construct() {
-        $this->handleUser("dashboard-profile");
+        if (!App::isUserLoggedIn()) {
+            App::redirectUser("/");
+        }
+        $this->renderView("dashboard-profile");
     }
 }
