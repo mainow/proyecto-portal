@@ -1,7 +1,5 @@
 <?php
 
-require_once "core/DbInfo.php"; // ! autoloader no funciona
-
 class DataModel extends Model {
     public $DB_CATEGORY = "categories";
     function __construct() {
@@ -12,7 +10,7 @@ class DataModel extends Model {
     function getCategories() {
         $sql = "SELECT * FROM $this->DB_CATEGORY";
         $query = $this->db->query($sql);
-        return $query ? mysqli_fetch_all($query) : 0; 
+        return $query ? mysqli_fetch_all($query) : []; 
     }
     
     function removeCategory(int $id) {

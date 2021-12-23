@@ -25,7 +25,7 @@ class App {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return isset($_SESSION["id"]) ? true : false;
+        return isset($_SESSION["id"]);
     }
     
     static function accountExists(string $username, string $pwd):bool {
@@ -54,6 +54,6 @@ class App {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        return $_SESSION["id"] == "112233";
+        return $_SESSION["id"] == $_SESSION["admin-id"];
     }
 }

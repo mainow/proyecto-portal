@@ -12,7 +12,7 @@ class FormWidget {
         $this->validator = $validator;
         $this->fields = $fields;
         $this->submitBtn = $submitBtn;
-        $this->fieldValues = $fieldsValues;
+        $this->fieldsValues = $fieldsValues;
         $this->cssClasses = $cssClasses;
     }
 
@@ -26,8 +26,8 @@ class FormWidget {
                 <div class="px-0 m-auto container-fluid row">
                 HTML;
                 foreach ($field as $subField) {
-                    if (isset($fieldsValues[$subField->name])) {
-                        $subField->value = $fieldsValues[$subField->name];
+                    if (isset($this->fieldsValues[$subField->name])) {
+                        $subField->value = $this->fieldsValues[$subField->name];
                     }
                     $subField->invalidFeedback = $this->validator->getFieldFeedback($subField->name);
                     $submitAttachedValue[$subField->name] = $subField->validation;
@@ -38,8 +38,8 @@ class FormWidget {
                 continue;
             } 
             // cuando el campo no es un array
-            if (isset($fieldsValues[$field->name])) {
-                $field->value = $fieldsValues[$field->name];
+            if (isset($this->fieldsValues[$field->name])) {
+                $field->value = $this->fieldsValues[$field->name];
             }
             $field->invalidFeedback = $this->validator->getFieldFeedback($field->name);
             $submitAttachedValue[$field->name] = $field->validation;

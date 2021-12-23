@@ -1,7 +1,5 @@
 <?php
 
-require_once "core/DbInfo.php"; // ! autoloader no funciona
-
 class UserModel extends Model {
     public $DB_FIRSTNAME = "first_name";
     public $DB_LASTNAME = "last_name";
@@ -27,12 +25,13 @@ class UserModel extends Model {
     function getAllUsers() {
         $sql = "SELECT * FROM $this->DB_TABLENAME WHERE first_name!='admin'";
         $query = $this->db->query($sql);
-        return $query ? mysqli_fetch_all($query) : 0;
+        return $query ? mysqli_fetch_all($query) : [];
 
     }
 
     function getUserCount():int {
-        return count($this->getAllUsers());
+        $users = $this->getAllUsers();
+        return $users == [] ? 0 : count($users);
     }
     
     function addUser(string $firstName, string $lastName, int $id, string $password, string $bornDate, string $email, string $category, string $entryDate) {
@@ -67,9 +66,11 @@ class UserModel extends Model {
     }
 
     function accountExists(string $username, string $pwd):bool {
-        $sql = "SELECT * FROM $this->DB_TABLENAME WHERE id='{$username}' AND pwd='{$pwd}'";
+        // $passwordCorrect == password_verify()
+        $sql = "SELECT pwd FROM $this->DB_TABLENAME WHERE id='{$username}'";
         $query = $this->db->query($sql);
-        return $query ? true : false;
+        $userData = mysqli_fetch_assoc($query);
+        return password_verify($pwd, $userData["pwd"]);
     }
 
     function setUserData(string $username, string $fieldName, $value):bool {

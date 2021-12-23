@@ -1,6 +1,7 @@
 <?php
 
 require_once "autoloader.php";
+require_once "setup.php";
 
 $router = new Router;
 $router->set("/", Home::class);

@@ -63,7 +63,7 @@
                 new SelectWidget("category", $options, "Categoria"),
             ],
             new InputWidget("date", "entry-date", "", fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
-        ], new ButtonWidget("submit-add-user", "Crear", cssClasses:"btn-block"), $params["fieldValues"])
+        ], new ButtonWidget("submit-add-user", "Crear", cssClasses:"btn-block"), $params["addUserFormfieldValues"])
     , "modal-lg");
     ?>
     <!-- /Crear usuario modal -->
