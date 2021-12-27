@@ -29,7 +29,7 @@ class FormValidator extends FormHandler {
             Validation::$USERNAME => function (string $username) { return $this::isValidUsername($username); },
             Validation::$USERLOGIN => function (string $username, string $password) { return App::accountExists($username, $password); },
             Validation::$PHONENUMBER => function (string $number) { return $this::isValidPhoneNumber($number); },
-            Validation::$CATEGORYEXISTS => function (string $name) { return !$this::categoryIsUnique($name) || !empty($value); },
+            Validation::$CATEGORYEXISTS => function (string $name) { return !$this::categoryIsUnique($name); },
             Validation::$EMAILINUSE => function (string $email) { return !$this->isEmailInUse($email); },
             Validation::$IDINUSE => function ($id) { return !$this->isIdInUse($id); }
         ];

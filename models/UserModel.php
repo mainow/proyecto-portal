@@ -69,6 +69,9 @@ class UserModel extends Model {
         // $passwordCorrect == password_verify()
         $sql = "SELECT pwd FROM $this->DB_TABLENAME WHERE id='{$username}'";
         $query = $this->db->query($sql);
+        if (!$query) {
+            return false;
+        }
         $userData = mysqli_fetch_assoc($query);
         return password_verify($pwd, $userData["pwd"]);
     }

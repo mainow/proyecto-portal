@@ -45,7 +45,7 @@
         <tbody>
             <?php 
             if ($params["categories"] != 0) {
-                foreach ($params["categories"] as $category) {
+                foreach ($params["categories"] as $categoryIndex => $category) {
                     ?>
                     <tr class="d-flex" style="position: relative">
                         <td><?php echo $category[0] ?></td>
@@ -54,18 +54,27 @@
                             <?php
                             $categoryEditModal = $category[1]."CategoryEditModal";
                             $categoryDeleteModal = $category[1]."DeleteEditModal";
+                            if ($params["editCategoryValidators"][$categoryIndex]->hasInvalidFields()) {
+                            ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        $(<?php echo $categoryEditModal ?>).modal('show');
+                                    });
+                                </script>
+                            <?php
+                            } 
                             echo new ButtonWidget("submit-edit-category", "<i class='fas fa-edit'></i> Editar", $category[0], "btn-sm btn-success", properties:"data-toggle='modal' data-target='#$categoryEditModal'");
                             echo new ButtonWidget("submit-remove-category", "<i class='fas fa-trash'></i> Eliminar", $category[0], "btn-sm btn-danger", properties:"data-toggle='modal' data-target='#$categoryDeleteModal'");
                             ?>
                             <!-- Modal editar categoria -->
                             <?php 
-                            echo new ModalWidget($categoryEditModal, "Editar Categoria", 
-                                new FormWidget("", "POST", $params["editCategoryValidator"], [
-                                    new InputWidget("text", "category-new-name", "ej: Plasticos", label:"Nuevo nombre", properties:"autofocus='autofocus'"),
+                            echo new ModalWidget($categoryEditModal, 'Editar Categoria "'.$category[1].'"', 
+                                new FormWidget("", "POST", $params["editCategoryValidators"][$categoryIndex], [
+                                    new InputWidget("text", "category-new-name", "ej: Plasticos", Validation::$CATEGORYEXISTS, label:"Nuevo nombre", properties:"autofocus='autofocus'"),
                                     new InputWidget("hidden", "category-id", "", value:$category[0])
-                                ], new ButtonWidget("submit-edit-category", "Guardar", cssClasses:"btn-block"))
+                                ], new ButtonWidget("submit-edit-category-".$category[1], "Guardar", cssClasses:"btn-block"))
                             );
-                            echo new ModalWidget($categoryDeleteModal, "Remover Categoria", 
+                            echo new ModalWidget($categoryDeleteModal, 'Remover Categoria "'.$category[1].'"', 
                                 // echo new ButtonWidget("a", "Cancelar", cssClasses:"", style:"height: min-content", properties:"data-dismiss='modal'");
                                 new FormWidget("", "POST", $params["removeCategoryValidator"], [
                                     new InputWidget("hidden", "category", "", value:$category[0]),

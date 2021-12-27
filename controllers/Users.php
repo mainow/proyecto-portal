@@ -9,14 +9,8 @@ class Users extends Dashboard {
         // formulario crear usuario
         $addUserValidator = new FormValidator(Actions::$ADDUSER, $_POST, ["first-name", "last-name", "id", "pwd", "born-date", "email", "category", "entry-date"], "submit-add-user");
         // :todos los formularios para editar usuario
-        $allUsers = $users->getAllUsers() == 0 ? [] : $users->getAllUsers() ;
-        $editUserValidators = [];
-        foreach ($allUsers as $user) {
+        foreach ($users->getAllUsers() as $user) {
             $editUserValidators[] = new FormValidator(Actions::$EDITUSER, $_POST, ["first-name", "last-name", "id", "born-date", "email", "category", "entry-date", "user-initial-id"], "submit-edit-user-".$user[2]);
-        }
-        
-        if ($users->getAllUsers() == 0) {
-            $this->renderView("dashboard-users", [ "addUserValidator" => $addUserValidator, "addUserFormfieldValues" => $addUserValidator->submittedFields, "categories" => $categories, "editUserValidators" => $editUserValidators]);
         }
 
         foreach ($editUserValidators as $editUserValidator) {
