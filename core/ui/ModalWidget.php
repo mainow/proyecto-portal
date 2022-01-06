@@ -1,15 +1,24 @@
 <?php
 
 class ModalWidget {
-    function __construct(string $id, string $title, string $body, string $bootstrapClassSize="modal-md") {
+    function __construct(string $id, string $title, string $body, string $bootstrapClassSize="modal-md", bool $showOnLoad=false) {
         $this->id = $id;
         $this->title = $title;
         $this->body = $body;
         $this->bootstrapClassSize = $bootstrapClassSize;
+        $this->showOnLoad = $showOnLoad;
     }
 
     function __toString() {
+        $script = $this->showOnLoad ? <<<HTML
+        <script>
+            $(document).ready(function() {
+                $($this->id).modal('show');
+            });
+        </script>
+        HTML : "";
         return <<<HTML
+        $script
         <div class="modal fade" id="$this->id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog $this->bootstrapClassSize" role="document">
                 <div class="modal-content">

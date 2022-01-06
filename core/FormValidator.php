@@ -18,9 +18,10 @@ class FormValidator extends FormHandler {
             Validation::$USERNAME => "Nombre de usuario invalido",
             Validation::$USERLOGIN => "Nombre de usuario o contraseña incorrectos",
             Validation::$PHONENUMBER => "Numero de teléfono invalido",
-            Validation::$CATEGORYEXISTS => "La categoria ya existe!",
-            Validation::$EMAILINUSE => "El correo eletronico ya esta en uso!",
-            Validation::$IDINUSE => "La cedula ya esta en uso!",
+            Validation::$CATEGORYEXISTS => "La categoria ya existe",
+            Validation::$EMAILINUSE => "El correo eletronico ya esta en uso",
+            Validation::$IDINUSE => "La cedula ya esta en uso",
+            Validation::$VALIDUSERPROFILEPICTURE => "La imagen no es valida"
         ];
         $this->validations = [
             Validation::$TEXT => function ($value) { return !empty($value); },
@@ -31,12 +32,12 @@ class FormValidator extends FormHandler {
             Validation::$PHONENUMBER => function (string $number) { return $this::isValidPhoneNumber($number); },
             Validation::$CATEGORYEXISTS => function (string $name) { return !$this::categoryIsUnique($name); },
             Validation::$EMAILINUSE => function (string $email) { return !$this->isEmailInUse($email); },
-            Validation::$IDINUSE => function ($id) { return !$this->isIdInUse($id); }
+            Validation::$IDINUSE => function ($id) { return !$this->isIdInUse($id); },
+            Validation::$VALIDUSERPROFILEPICTURE => function ($profilePicture) { return $this->isFileValidImg($profilePicture); }
         ];
-        // evita que el formulario se carge con datos de otros formularios con campos con nombres iguales
         $this->appAction = $appAction;
         $this->submitButtonName = $submitButtonName;
-        $this->method = $method;
+        $this->method = $method;           
         if (!$this->formWasSubmitted()) {
             return;
         } 
@@ -44,16 +45,13 @@ class FormValidator extends FormHandler {
         $this->submittedFields = $this::getSubmittedData($method, $keywords);
         if (isset($this->submittedFields[$submitButtonName])) {
             // json_decode porque el botton submit del form guarda todas las validaciones en un json
-            // ej: {"first_name": "TEXT_VALIDATION"}
+            // ej: {"first-name": "TEXT_VALIDATION"}
             $this->fieldsValidationsTypes = json_decode($this->submittedFields[$submitButtonName], true);
         }
         // eliminar el valor del boton para que no sea validado mas tarde 
         unset($this->submittedFields[$submitButtonName]);
 
-        if ($this->formWasSubmitted()) {
-            $this->validateFields();
-        }
-        
+        $this->validateFields();
     }
     
     function formWasSubmitted():bool {

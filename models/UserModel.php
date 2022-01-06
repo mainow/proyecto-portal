@@ -9,6 +9,7 @@ class UserModel extends Model {
     public $DB_EMAIL = "email";
     public $DB_CATEGORY = "category";
     public $DB_ENTRYDATE = "entry_date";
+    public $DB_PROFILEIMG = "profile_img";
     protected $DB_TABLENAME = "users";
 
     function __construct() {
@@ -26,7 +27,6 @@ class UserModel extends Model {
         $sql = "SELECT * FROM $this->DB_TABLENAME WHERE first_name!='admin'";
         $query = $this->db->query($sql);
         return $query ? mysqli_fetch_all($query) : [];
-
     }
 
     function getUserCount():int {
@@ -56,6 +56,13 @@ class UserModel extends Model {
                 $this->DB_CATEGORY='$category',
                 $this->DB_ENTRYDATE='$entryDate'
                 WHERE id=$userId";
+        $this->db->query($sql);
+    }
+    
+    function setUserProfileImg(int $id, string $imgName) {
+        $sql = "UPDATE $this->DB_TABLENAME
+                SET $this->DB_PROFILEIMG='$imgName'
+                WHERE id=$id";
         $this->db->query($sql);
     }
 

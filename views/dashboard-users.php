@@ -18,15 +18,7 @@
         $('#usersTable').dataTable({
             // ! cambiar idioma
         });
-        <?php 
-        if ($params["addUserValidator"]->hasInvalidFields()) {
-        ?>
-            $(document).ready(function() {
-                $('#createUserModal').modal('show');
-            });
-        <?php
-        }?>
-    } );
+    });
 </script>
 <div class="container-sm py-3">
     <!-- Intro banner -->
@@ -49,6 +41,7 @@
     }
     echo new ModalWidget("createUserModal", "Crear Usuario", 
         new FormWidget("", "POST", $params["addUserValidator"], [
+            new InputProfileImageWidget("profile-img", Validation::$VALIDUSERPROFILEPICTURE, "Imagen de perfil"),
             [
                 new InputWidget("text", "first-name", "Nombre/s", fAIcon:"fas fa-user", label:"Nombre"),
                 new InputWidget("text", "last-name", "Apellido/s", fAIcon:"far fa-user", label:"Apellido")
@@ -64,7 +57,7 @@
             ],
             new InputWidget("date", "entry-date", "", fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
         ], new ButtonWidget("submit-add-user", "Crear", cssClasses:"btn-block"), $params["addUserFormfieldValues"])
-    , "modal-lg");
+    , "modal-lg", $params["addUserValidator"]->hasInvalidFields());
     ?>
     <!-- /Crear usuario modal -->
 
@@ -82,17 +75,27 @@
             <?php
             $users = $users->getAllUsers();
             foreach ($users as $userIndex=>$user) {
+
+                $userFirstName = $user[1];
+                $userLastName = $user[2];
+                $userId = $user[3];
+                $userPwd = $user[4];
+                $userEntryDate = $user[5];
+                $userEmail = $user[6];
+                $userCategory = $user[7];
+                $userBornDate = $user[8];
+
                 $options = [];
                 foreach ($params["categories"] as $category) {
-                    $property = $category[0 ] == $user[6] ? "selected" : "";
+                    $property = $category[0] == $userCategory ? "selected" : "";
                     $options[] = new OptionWidget($category[0], $category[1], properties:"$property");
                 }
-                $editUserModalId = "user".$user[2]."Edit";
+                $editUserModalId = "user".$userId."Edit";
                 ?>
                 <tr class="d-flex">
-                    <td><?php echo $user[2] ?></td>
-                    <td><?php echo $user[0] ?></td>
-                    <td><?php echo $user[1] ?></td>
+                    <td><?php echo $userId ?></td>
+                    <td><?php echo $userFirstName ?></td>
+                    <td><?php echo $userLastName ?></td>
                     <td>
                     <!-- Editar usuario modal -->
                     <?php 
@@ -100,26 +103,26 @@
                         echo new ModalWidget($editUserModalId, "Editar Usuario", 
                             new FormWidget("", "POST", $params["editUserValidators"][$userIndex], [
                                 [
-                                    new InputWidget("text", "first-name", "Nombre/s", value:$user[0],fAIcon:"fas fa-user", label:"Nombre"),
-                                    new InputWidget("text", "last-name", "Apellido/s", value:$user[1],fAIcon:"far fa-user", label:"Apellido")
+                                    new InputWidget("text", "first-name", "Nombre/s", value:$userFirstName,fAIcon:"fas fa-user", label:"Nombre"),
+                                    new InputWidget("text", "last-name", "Apellido/s", value:$userLastName,fAIcon:"far fa-user", label:"Apellido")
                                 ],
                                 [ 
-                                    new InputWidget("number", "id", "DN/LC/Pasaporte", value:$user[2],fAIcon:"fas fa-id-card", label:"Numero de documento"),
-                                    new InputWidget("date", "born-date", "", value:$user[4],fAIcon: "fas fa-birthday-cake", label:"Fecha de nacimiento")
+                                    new InputWidget("number", "id", "DN/LC/Pasaporte", value:$userId,fAIcon:"fas fa-id-card", label:"Numero de documento"),
+                                    new InputWidget("date", "born-date", "", value:$userBornDate,fAIcon: "fas fa-birthday-cake", label:"Fecha de nacimiento")
                                 ],
                                 [
-                                    new InputWidget("email", "email", "Correo electronico", value:$user[5],fAIcon:"fas fa-envelope", label:"Email"),
+                                    new InputWidget("email", "email", "Correo electronico", value:$userEmail, fAIcon:"fas fa-envelope", label:"Email"),
                                     new SelectWidget("category", $options, "Categoria"),
                                 ],
-                                new InputWidget("date", "entry-date", "", value:$user[7],fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
+                                new InputWidget("date", "entry-date", "", value:$userEntryDate, fAIcon:"fas fa-calendar-day", label:"Fecha de ingreso"),
                                 // para la validacion de id y email mas tarde
-                                new InputWidget("hidden", "user-initial-id", "", fAIcon:"", value:$user[2]),
-                                new InputWidget("hidden", "user-initial-email", "", fAIcon:"", value:$user[5]),
+                                new InputWidget("hidden", "user-initial-id", "", fAIcon:"", value:$userId),
+                                new InputWidget("hidden", "user-initial-email", "", fAIcon:"", value:$userEmail),
                                 // cada formulario tiene un valor de submit unico con el numero de cedula del usuario
-                            ], new ButtonWidget("submit-edit-user-".$user[2], "Guardar Cambios", cssClasses:"btn-block"))
-                        , "modal-lg");
+                            ], new ButtonWidget("submit-edit-user-".$userId, "Guardar Cambios", cssClasses:"btn-block"))
+                        , "modal-lg", $params["editUserValidators"][$userIndex]->hasInvalidFields())
                     ?>
-                    <!-- /Editar usuarios modal -->
+                    <!-- /Editar usuario modal -->
                     </td>
                 </tr>
                 <?php

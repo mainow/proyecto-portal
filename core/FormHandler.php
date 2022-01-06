@@ -30,17 +30,12 @@ class FormHandler {
             if (isset($method[$keyword])) {
                 $keysOut[$keyword] = $method[$keyword];
             }
-        }
-        return $keysOut;
-    }
-
-    static function hasEmptyField(array $input):bool {
-        foreach ($input as $data) {
-            if (empty($data)) {
-                return true;
+            // verificar si el valor existe en la variable $_FILES, esto para poder reconocer archivos subidos
+            if (isset($_FILES[$keyword])) {
+                $keysOut[$keyword] = $_FILES[$keyword];
             }
         }
-        return false;
+        return $keysOut;
     }
 
     static function isValidEmail(string $email):bool {
@@ -63,7 +58,14 @@ class FormHandler {
         return $pwd == $pwdRepeat;
     }
 
-    static function isValidPhoneNumber(string $number) {
+    static function isValidPhoneNumber(string $number):bool {
         return strlen($number) > 5;
+    }
+
+    static function isFileValidImg(array $inputFileData):bool {
+        $allowed = ["png", "jpg"];
+        $filename = $inputFileData["name"];
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        return in_array($ext, $allowed) ? true : false;
     }
 }

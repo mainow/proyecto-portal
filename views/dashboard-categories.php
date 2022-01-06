@@ -8,11 +8,15 @@
         flex: 1
     }
     /* tercera columna */
-    thead tr th:nth-child(3), tbody tr td:nth-child(3) {
-        min-width: 10rem;
+    thead tr th:last-child, tbody tr td:last-child {
+        width: 11rem;
         display: flex;
-        gap: .5rem
     }
+    tbody tr td:last-child {
+        gap: .5rem;
+        justify-content: flex-end;
+    }
+    
 </style>
 <script>
     $(document).ready( function () {
@@ -54,15 +58,6 @@
                             <?php
                             $categoryEditModal = $category[1]."CategoryEditModal";
                             $categoryDeleteModal = $category[1]."DeleteEditModal";
-                            if ($params["editCategoryValidators"][$categoryIndex]->hasInvalidFields()) {
-                            ?>
-                                <script>
-                                    $(document).ready(function() {
-                                        $(<?php echo $categoryEditModal ?>).modal('show');
-                                    });
-                                </script>
-                            <?php
-                            } 
                             echo new ButtonWidget("submit-edit-category", "<i class='fas fa-edit'></i> Editar", $category[0], "btn-sm btn-success", properties:"data-toggle='modal' data-target='#$categoryEditModal'");
                             echo new ButtonWidget("submit-remove-category", "<i class='fas fa-trash'></i> Eliminar", $category[0], "btn-sm btn-danger", properties:"data-toggle='modal' data-target='#$categoryDeleteModal'");
                             ?>
@@ -72,7 +67,8 @@
                                 new FormWidget("", "POST", $params["editCategoryValidators"][$categoryIndex], [
                                     new InputWidget("text", "category-new-name", "ej: Plasticos", Validation::$CATEGORYEXISTS, label:"Nuevo nombre", properties:"autofocus='autofocus'"),
                                     new InputWidget("hidden", "category-id", "", value:$category[0])
-                                ], new ButtonWidget("submit-edit-category-".$category[1], "Guardar", cssClasses:"btn-block"))
+                                ], new ButtonWidget("submit-edit-category-".$category[1], "Guardar", cssClasses:"btn-block"), $params["editCategoryValidators"][$categoryIndex]->submittedFields),
+                                showOnLoad:$params["editCategoryValidators"][$categoryIndex]->hasInvalidFields()
                             );
                             echo new ModalWidget($categoryDeleteModal, 'Remover Categoria "'.$category[1].'"', 
                                 // echo new ButtonWidget("a", "Cancelar", cssClasses:"", style:"height: min-content", properties:"data-dismiss='modal'");

@@ -5,7 +5,7 @@ class SelectWidget extends Widget {
      * SelectWidget
      * * Crea un select con funcionalidades para un form con datos dinamicos
      */
-    function __construct(string $name, array $options,string $label="", string $properties="") {
+    function __construct(string $name, array $options, string $label="", string $properties="") {
         parent::__construct($name, "");
         $this->options = $options;
         $this->label = $label;
