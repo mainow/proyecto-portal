@@ -3,9 +3,18 @@
         width: 2.5rem;
     }
 
-    .dataTable thead tr th:nth-child(2), .dataTable tbody tr td:nth-child(2),
-    .dataTable thead tr th:last-child, .dataTable tbody tr td:last-child {
+    .dataTable thead tr th:nth-child(2), .dataTable tbody tr td:nth-child(2) {
         width: 5rem !important;
+    }
+    
+    .dataTable thead tr th:last-child {
+        width: 12rem;
+    }
+    .dataTable tbody tr td:last-child {
+        display: flex;
+        justify-content: flex-end;
+        width: 12rem !important;
+        gap: .5rem
     }
     
     .dataTable thead th:not(.dataTable thead th:nth-child(1), .dataTable thead th:nth-child(2), .dataTable thead th:last-child),
@@ -87,6 +96,7 @@
                 $userEmail = $user[6];
                 $userCategory = $user[7];
                 $userBornDate = $user[8];
+                $userActive = $user[10];
 
                 $options = [];
                 foreach ($params["categories"] as $category) {
@@ -94,6 +104,8 @@
                     $options[] = new OptionWidget($category[0], $category[1], properties:"$property");
                 }
                 $editUserModalId = "user".$userId."Edit";
+                $disableUserModalId = "user".$userId."Disable";
+                $userInfoClass = $userActive == 0 ? "text-muted" : "";
                 ?>
                 <tr class="d-flex">
                     <td>
@@ -104,13 +116,37 @@
                             <img class="img-circle elevation-2" style="width: 2rem; height: 2rem; object-fit: cover" src="$userImg" alt="Imagen de perfil">
                         HTML; ?>
                     </td>
-                    <td><?php echo $userId ?></td>
-                    <td><?php echo $userFirstName ?></td>
-                    <td><?php echo $userLastName ?></td>
+                    <?php
+                    echo <<<HTML
+                    <td class="$userInfoClass">$userId</td>
+                    <td class="$userInfoClass">$userFirstName</td>
+                    <td class="$userInfoClass">$userLastName</td>
+                    HTML;
+                    ?>
                     <td>
                     <!-- Editar usuario modal -->
                     <?php 
                         echo new ButtonWidget("", "<i class='fas fa-edit'></i> Editar", cssClasses:"btn-sm btn-success", properties:"data-toggle='modal' data-target='#$editUserModalId'");
+
+                        if ($userActive == 0) {
+                            // formulario habilitar usuario
+                            echo new ButtonWidget("", "<i class='far fa-plus-square'></i> Habilitar", cssClasses:"btn-sm btn-info", properties:"data-toggle='modal' data-target='#$disableUserModalId'");
+                            echo new ModalWidget($disableUserModalId, 'Habilitar Usuario "'.$userFirstName.'"', 
+                                new FormWidget("", "POST", $params["enableUserValidators"][$userIndex], [
+                                    new InputWidget("hidden", "user-id", "", value:$userId),
+                                ], new ButtonWidget("submit-enable-user-$userId", "<i class='far fa-plus-square'></i> Si, estoy seguro/a", cssClasses:"btn-info btn-block"))
+                            );
+                        } else {
+                            // formulario deshabilitar usuario
+                            echo new ButtonWidget("", "<i class='far fa-minus-square'></i> Deshabilitar", cssClasses:"btn-sm btn-warning", properties:"data-toggle='modal' data-target='#$disableUserModalId'");
+                            echo new ModalWidget($disableUserModalId, 'Deshabilitar Usuario "'.$userFirstName.'"', 
+                                new FormWidget("", "POST", $params["disableUserValidators"][$userIndex], [
+                                    new InputWidget("hidden", "user-id", "", value:$userId),
+                                ], new ButtonWidget("submit-disable-user-$userId", "<i class='far fa-minus-square'></i> Si, estoy seguro/a", cssClasses:"btn-warning btn-block"))
+                            );
+                        }
+                        
+                        // formulario editar usuario
                         echo new ModalWidget($editUserModalId, "Editar Usuario", 
                             new FormWidget("", "POST", $params["editUserValidators"][$userIndex], [
                                 [

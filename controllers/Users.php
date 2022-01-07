@@ -11,22 +11,39 @@ class Users extends Dashboard {
         
         // :todos los formularios para editar usuario
         $editUserValidators = [];
+        $disableUserValidators = [];
+        $enableUserValidators = [];
         foreach ($users->getAllUsers() as $user) {
             $userProfileEditValidatorId = "profile-img-$user[3]";
-            $editUserValidators[] = new FormValidator(Actions::$EDITUSER, $_POST, [$userProfileEditValidatorId, "first-name", "last-name", "id", "born-date", "email", "category", "entry-date", "user-initial-id"], "submit-edit-user-".$user[3]);
+            $editUserValidators[] = new FormValidator(Actions::$EDITUSER, $_POST, [$userProfileEditValidatorId, "first-name", "last-name", "id", "born-date", "email", "category", "entry-date", "user-initial-id"], "submit-edit-user-$user[3]");
+            $disableUserValidators[] = new FormValidator(Actions::$DISABLEUSER, $_POST, ["user-id"], "submit-disable-user-$user[3]");
+            $enableUserValidators[] = new FormValidator(Actions::$ENABLEUSER, $_POST, ["user-id"], "submit-enable-user-$user[3]");
         }
 
         foreach ($editUserValidators as $editUserValidator) {
             // reemplazar mayoria de los datos del usuario menos la imagen de perfil
+            $uD = $editUserValidator->submittedFields;
             if ($editUserValidator->wasValidated() && !$editUserValidator->hasInvalidFields()) {
-                $uD = $editUserValidator->submittedFields;
                 $users->editUser($uD["user-initial-id"], $uD["first-name"], $uD["last-name"], $uD["id"], $uD["born-date"], $uD["email"], $uD["category"], $uD["entry-date"]);
             }
             // reemplazar la imagen de perfil
-            if ($editUserValidator->wasValidated() && !$editUserValidator->hasInvalidFields() && isset($editUserValidator->submittedFields[$userProfileEditValidatorId])) {
+            if ($editUserValidator->wasValidated() && !$editUserValidator->hasInvalidFields()) {
+                $userProfileEditValidatorId = "profile-img-".$uD['id'];
                 if ($editUserValidator->submittedFields[$userProfileEditValidatorId]["name"] != "") {
                     $this->handleSubmittedImg($editUserValidator->submittedFields[$userProfileEditValidatorId], $uD["id"]);
                 }
+            }
+        }
+
+        foreach ($disableUserValidators as $validator) {
+            if ($validator->wasValidated()) {
+                $users->disableUser(intval($validator->submittedFields["user-id"]));
+            }
+        }
+
+        foreach ($enableUserValidators as $validator) {
+            if ($validator->wasValidated()) {
+                $users->enableUser(intval($validator->submittedFields["user-id"]));
             }
         }
         
@@ -40,7 +57,7 @@ class Users extends Dashboard {
             App::redirectUser("dashboard/users");
         }
 
-        $this->renderView("dashboard-users", [ "addUserValidator" => $addUserValidator, "addUserFormfieldValues" => $addUserValidator->submittedFields, "categories" => $categories, "editUserValidators" => $editUserValidators]);
+        $this->renderView("dashboard-users", [ "addUserValidator" => $addUserValidator, "addUserFormfieldValues" => $addUserValidator->submittedFields, "categories" => $categories, "editUserValidators" => $editUserValidators, "disableUserValidators" => $disableUserValidators, "enableUserValidators" => $enableUserValidators ]);
     }
 
     function handleSubmittedImg(array $image, int $userId_Key) {

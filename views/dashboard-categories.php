@@ -71,7 +71,6 @@
                                 showOnLoad:$params["editCategoryValidators"][$categoryIndex]->hasInvalidFields()
                             );
                             echo new ModalWidget($categoryDeleteModal, 'Remover Categoria "'.$category[1].'"', 
-                                // echo new ButtonWidget("a", "Cancelar", cssClasses:"", style:"height: min-content", properties:"data-dismiss='modal'");
                                 new FormWidget("", "POST", $params["removeCategoryValidator"], [
                                     new InputWidget("hidden", "category", "", value:$category[0]),
                                 ], new ButtonWidget("submit-remove-category", "<i class='fas fa-trash'></i> Si, estoy seguro/a", cssClasses:"btn-danger btn-block"))

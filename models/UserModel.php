@@ -10,6 +10,7 @@ class UserModel extends Model {
     public $DB_CATEGORY = "category";
     public $DB_ENTRYDATE = "entry_date";
     public $DB_PROFILEIMG = "profile_img";
+    public $DB_ACTIVE = "active";
     protected $DB_TABLENAME = "users";
 
     function __construct() {
@@ -61,6 +62,14 @@ class UserModel extends Model {
     
     function setUserProfileImg(int $id, string $imgName) {
         $this->updateUserData($id, $this->DB_PROFILEIMG, "'$imgName'");
+    }
+
+    function disableUser(int $id) {
+        $this->updateUserData($id, $this->DB_ACTIVE, 0);
+    }
+
+    function enableUser(int $id) {
+        $this->updateUserData($id, $this->DB_ACTIVE, 1);
     }
 
     function valueExists(string $field, string $value):bool {
