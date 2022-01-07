@@ -3,7 +3,7 @@
 class ButtonWidget extends Widget {
     /**
      * ButtonWidget
-     * * Crea un boton cone estilos y funcionalidades para un form
+     * * Crea un boton con estilos y funcionalidades para un form
      */
     function __construct(string $name, string $text, $value=null, string $cssClasses="", string $style="", string $properties="") {
         parent::__construct($name, "");

@@ -20,6 +20,24 @@
         border: 0 !important;
     }
 
+    .dataTable tr td:last-child,
+    .dataTable tr td:nth-child(1),
+    .dataTable tr td:nth-child(2) {
+        width: 1%;
+        white-space: nowrap;
+    }
+
+    .dataTable td:last-child > * {
+        margin-left: .5rem;
+    }
+
+    .dataTable thead tr th {
+        padding-right: 1rem !important;
+    }    
+
+    .custom-select {
+        display: block;
+    }
 </style>
 <body class="hold-transition sidebar-mini layout-fixed">    
     <div class="wrapper">

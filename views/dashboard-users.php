@@ -1,26 +1,5 @@
 <style> 
-    .dataTable thead tr th:nth-child(1), .dataTable tbody tr td:nth-child(1) {
-        width: 2.5rem;
-    }
-
-    .dataTable thead tr th:nth-child(2), .dataTable tbody tr td:nth-child(2) {
-        width: 5rem !important;
-    }
     
-    .dataTable thead tr th:last-child {
-        width: 12rem;
-    }
-    .dataTable tbody tr td:last-child {
-        display: flex;
-        justify-content: flex-end;
-        width: 12rem !important;
-        gap: .5rem
-    }
-    
-    .dataTable thead th:not(.dataTable thead th:nth-child(1), .dataTable thead th:nth-child(2), .dataTable thead th:last-child),
-    .dataTable tbody td:not(.dataTable tbody td:nth-child(1), .dataTable tbody td:nth-child(2), .dataTable tbody td:last-child)  {
-        flex: 1
-    }
 </style>
 <script>
     $(document).ready( function () {
@@ -74,7 +53,7 @@
     <!-- Usuarios datatable -->
     <table id="usersTable" class="table table-striped bg-white">
         <thead>
-            <tr class="d-flex">
+            <tr>
                 <th>Foto</th>
                 <th>Ci</th>
                 <th>Nombre</th>
@@ -92,10 +71,11 @@
                 $userLastName = $user[2];
                 $userId = $user[3];
                 $userPwd = $user[4];
-                $userEntryDate = $user[5];
+                $userBornDate = $user[5];
                 $userEmail = $user[6];
                 $userCategory = $user[7];
-                $userBornDate = $user[8];
+                $userEntryDate = $user[8];
+                $userIdKey = $user[9];
                 $userActive = $user[10];
 
                 $options = [];
@@ -107,7 +87,7 @@
                 $disableUserModalId = "user".$userId."Disable";
                 $userInfoClass = $userActive == 0 ? "text-muted" : "";
                 ?>
-                <tr class="d-flex">
+                <tr>
                     <td>
                         <?php 
                         $url = App::getBaseUrl();
@@ -150,7 +130,7 @@
                         echo new ModalWidget($editUserModalId, "Editar Usuario", 
                             new FormWidget("", "POST", $params["editUserValidators"][$userIndex], [
                                 [
-                                    new InputProfileImageWidget("profile-img-$userId", Validation::$VALIDUSERPROFILEPICTURE, label:"Imagen de perfil", defaultImage:$userImg, showText:false, cssClasses:"col-3"),    
+                                    new InputProfileImageWidget("profile-img-$userIdKey", Validation::$VALIDUSERPROFILEPICTURE, label:"Imagen de perfil", defaultImage:$userImg, showText:false, cssClasses:"col-3"),    
                                     new InputWidget("text", "first-name", "Nombre/s", value:$userFirstName,fAIcon:"fas fa-user", label:"Nombre"),
                                     new InputWidget("text", "last-name", "Apellido/s", value:$userLastName,fAIcon:"far fa-user", label:"Apellido")
                                 ],

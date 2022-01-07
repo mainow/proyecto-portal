@@ -14,7 +14,7 @@ class Users extends Dashboard {
         $disableUserValidators = [];
         $enableUserValidators = [];
         foreach ($users->getAllUsers() as $user) {
-            $userProfileEditValidatorId = "profile-img-$user[3]";
+            $userProfileEditValidatorId = "profile-img-$user[9]";
             $editUserValidators[] = new FormValidator(Actions::$EDITUSER, $_POST, [$userProfileEditValidatorId, "first-name", "last-name", "id", "born-date", "email", "category", "entry-date", "user-initial-id"], "submit-edit-user-$user[3]");
             $disableUserValidators[] = new FormValidator(Actions::$DISABLEUSER, $_POST, ["user-id"], "submit-disable-user-$user[3]");
             $enableUserValidators[] = new FormValidator(Actions::$ENABLEUSER, $_POST, ["user-id"], "submit-enable-user-$user[3]");
@@ -28,9 +28,11 @@ class Users extends Dashboard {
             }
             // reemplazar la imagen de perfil
             if ($editUserValidator->wasValidated() && !$editUserValidator->hasInvalidFields()) {
-                $userProfileEditValidatorId = "profile-img-".$uD['id'];
+                $userIdKey = $users->getUsersByData("id", $uD["id"])["id_key"];
+                $userProfileEditValidatorId = "profile-img-".$userIdKey;
                 if ($editUserValidator->submittedFields[$userProfileEditValidatorId]["name"] != "") {
-                    $this->handleSubmittedImg($editUserValidator->submittedFields[$userProfileEditValidatorId], $uD["id"]);
+                    $userIdKey = $users->getUsersByData("id", $uD["id"])["id_key"];
+                    $this->handleSubmittedImg($editUserValidator->submittedFields[$userProfileEditValidatorId], $userIdKey);
                 }
             }
         }
@@ -53,7 +55,8 @@ class Users extends Dashboard {
             $pwd = password_hash($data["pwd"], PASSWORD_DEFAULT);
             $users->addUser($data["first-name"], $data["last-name"], $data["id"], $pwd, $data["born-date"], $data["email"], $data["category"], $data["entry-date"]);
             
-            $this->handleSubmittedImg($data["profile-img"], $data["id"]);
+            $userIdKey = $users->getUsersByData("id", $data["id"])["id_key"];
+            $this->handleSubmittedImg($data["profile-img"], $userIdKey);
             App::redirectUser("dashboard/users");
         }
 
@@ -70,6 +73,7 @@ class Users extends Dashboard {
             // guardar la imagen
             move_uploaded_file($userImgTmp, $profileImgFile);
             $users = new UserModel();
-            $users->setUserProfileImg($userId_Key, $userImgName);
+            $userId = $users->getUsersByData("id_key", $userId_Key)["id"];
+            $users->setUserProfileImg($userId, $userImgName);
     }
 }
