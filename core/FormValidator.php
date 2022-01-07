@@ -65,7 +65,7 @@ class FormValidator extends FormHandler {
     function getFieldFeedback(string $fieldName):string {
         return $this->fieldsFeedback[$fieldName] ?? 0;
     }
-    
+
     function validateFields() {
         if (count($this->submittedFields) == 0) {
             return;
@@ -74,6 +74,10 @@ class FormValidator extends FormHandler {
         // solo validacion de campos (nombre de usuario mayor a 5 caracteres, etc)
         foreach ($this->submittedFields as $fieldName => $value) {
             $fieldValidation = $this->fieldsValidationsTypes[$fieldName];
+            if ($this->appAction == Actions::$EDITUSER && $fieldValidation == Validation::$VALIDUSERPROFILEPICTURE && $value["name"] == "") {
+                continue;
+            }
+            
             // validar primero si el campo esta vacio
             if (!$this->validations[Validation::$TEXT]($value)) {
                 $this->fieldsFeedback[$fieldName] = $this->errors[Validation::$TEXT];

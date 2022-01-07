@@ -1,6 +1,5 @@
 <?php
 
-require_once "autoloader.php";
 class SetupModel extends Model {
     public $DB_TABLENAME = "users";
     function __construct() {

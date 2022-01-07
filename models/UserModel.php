@@ -60,13 +60,10 @@ class UserModel extends Model {
     }
     
     function setUserProfileImg(int $id, string $imgName) {
-        $sql = "UPDATE $this->DB_TABLENAME
-                SET $this->DB_PROFILEIMG='$imgName'
-                WHERE id=$id";
-        $this->db->query($sql);
+        $this->updateUserData($id, $this->DB_PROFILEIMG, "'$imgName'");
     }
 
-    function valueExists(string $field, string $value) {
+    function valueExists(string $field, string $value):bool {
         $sql = "SELECT * FROM $this->DB_TABLENAME WHERE $field='$value'";
         $query = $this->db->query($sql);
         return $query ? true : false;
@@ -83,8 +80,8 @@ class UserModel extends Model {
         return password_verify($pwd, $userData["pwd"]);
     }
 
-    function setUserData(string $username, string $fieldName, $value):bool {
-        $sql = "UPDATE $this->DB_TABLENAME SET $fieldName=$value WHERE username=$username";
+    function updateUserData(int $id, string $fieldName, $value):bool {
+        $sql = "UPDATE $this->DB_TABLENAME SET $fieldName=$value WHERE id=$id";
         $query = $this->db->query($sql);
         return $query ? true : false;
     }

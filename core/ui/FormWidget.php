@@ -21,7 +21,9 @@ class FormWidget {
         if (isset($this->fieldsValues[$field->name])) {
             $field->value = $this->fieldsValues[$field->name];
         }
-        $field->invalidFeedback = $this->validator->getFieldFeedback($field->name);
+        if (!empty($this->validator->getFieldFeedback($field->name))) {
+            $field->invalidFeedback = $this->validator->getFieldFeedback($field->name);
+        }
         $this->submitAttachedValue[$field->name] = $field->validation;
         return $field;
     }
@@ -36,14 +38,16 @@ class FormWidget {
             // cuando se pasa un array para agrupar en columnas los campos
             $subFieldsContainer = <<<HTML
             <div class="px-0 m-auto container-fluid row">
-            HTML;
-            foreach ($field as $subField) {
-                $subFieldsContainer .= "\n".$this->prepareField($subField);
-            }
-            $subFieldsContainer .= <<<HTML
+                {FIELDS}
             </div>
             HTML;
-            $fieldsHTML .= "\n$subFieldsContainer";
+
+            $grouppedFields = "";
+            foreach ($field as $subField) {
+                $grouppedFields .= "\n".$this->prepareField($subField);
+            }
+
+            $fieldsHTML .= "\n".str_replace("{FIELDS}", $grouppedFields, $subFieldsContainer);
         }
         // transformar las validaciones de los campos en un json
         // ej: {"first-name": "TEXT_VALIDATION"}
