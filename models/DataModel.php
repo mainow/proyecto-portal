@@ -1,6 +1,10 @@
 <?php
 
 class DataModel extends Model {
+    /**
+     * DataModel
+     * * Controla datos generales que tienen que ver con el funcionamiento de la aplicacion (ej: categorias)
+     * */    
     public $DB_CATEGORY = "categories";
     function __construct() {
         $DATA_DB = new DataBaseInfo("localhost", "root", "", "proyecto_portal");

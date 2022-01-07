@@ -1,6 +1,11 @@
 <?php
 
 class ModalWidget {
+    /**
+     * ModalWidget
+     * * Crea un modal de bootstrap con funcionalidades extra
+     */
+    
     function __construct(string $id, string $title, string $body, string $bootstrapClassSize="modal-md", bool $showOnLoad=false) {
         $this->id = $id;
         $this->title = $title;

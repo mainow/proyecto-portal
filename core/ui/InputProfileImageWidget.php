@@ -1,6 +1,10 @@
 <?php
 
 class InputProfileImageWidget {
+    /**
+     * InputProfileImageWidget
+     * * Crea un widget especificamente dedicado a un selector de imagen de perfil
+     */
     public $invalidFeedback = "";
     function __construct(string $name, string $validation, string $label="", string $defaultImage="", bool $showText=true, string $cssClasses="", string $style="") {
         $this->name = $name;

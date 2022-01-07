@@ -29,7 +29,7 @@ class Categories extends Dashboard {
                 $dataModel->editCategory($editCategoryValidator->submittedFields["category-id"], $editCategoryValidator->submittedFields["category-new-name"]);
             }
         }
-        // pasar las categorias existentes como parametro a la vista
+
         $this->renderView("dashboard-categories", [ "categories" => $dataModel->getCategories(), "addCategoryValidator" => $addCategoryValidator, "removeCategoryValidator" => $removeCategoryValidator, "editCategoryValidators" => $editCategoryValidators]);
     }
 }

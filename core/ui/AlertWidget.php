@@ -1,6 +1,10 @@
 <?php
 
 class AlertWidget {
+    /**
+     * AlertWidgt
+     * * Crea un alerta
+     */
     function __construct(string $msg) {
         $this->msg = $msg;
     }

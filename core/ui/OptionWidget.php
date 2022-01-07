@@ -1,6 +1,11 @@
 <?php
 
 class OptionWidget extends Widget {
+    /**
+     * OptionWidget
+     * * Crea un etiqueda <option>
+     */
+    
     function __construct(string $value, string $text, string $validation="", string $properties="") {
         parent::__construct("", $validation);
         $this->text = $text;

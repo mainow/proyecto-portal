@@ -1,6 +1,11 @@
 <?php
 
 class UserModel extends Model {
+    /**
+     * UserModel
+     * * Controla todos los datos relacionados al usuario y este proyecto
+     */
+
     public $DB_FIRSTNAME = "first_name";
     public $DB_LASTNAME = "last_name";
     public $DB_ID = "id";

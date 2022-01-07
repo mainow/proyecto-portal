@@ -1,6 +1,11 @@
 <?php
 
 class SetupModel extends Model {
+    /**
+     * SetupModel
+     * * Configuracion basica de este proyecto
+     * ! En el futuro debe de estar basado en migraciones
+     */
     public $DB_TABLENAME = "users";
     function __construct() {
         $USERS_DB = new DataBaseInfo("localhost", "root", "", "proyecto_portal");
